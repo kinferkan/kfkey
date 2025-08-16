@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { toolService } from '@/data/tools'
 import { Tool } from '@/types'
+import { useTranslation } from 'react-i18next'
+import { i18nTools } from '@/utils/i18n-tools'
 
 interface SearchResultsProps {
   query: string
@@ -14,6 +16,7 @@ interface SearchResultsProps {
 }
 
 export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResultsProps) {
+  const { t } = useTranslation()
   const searchResults = useMemo(() => {
     if (!query.trim()) return { tools: [], shortcuts: [] }
     
@@ -103,15 +106,15 @@ export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResu
         <div>
           <h1 className="text-3xl font-bold flex items-center space-x-2">
             <Search className="w-8 h-8" />
-            <span>搜索结果</span>
+            <span>{t('searchResults.searchResults')}</span>
           </h1>
           <p className="text-muted-foreground mt-1">
-            为 "{query}" 找到 {totalResults} 个结果
+            {t('searchResults.foundResults', { count: totalResults, query })}
           </p>
         </div>
         <Button variant="outline" onClick={onClearSearch}>
           <X className="w-4 h-4 mr-2" />
-          清除搜索
+          {t('searchResults.clearSearch')}
         </Button>
       </div>
 
@@ -121,12 +124,12 @@ export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResu
           <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
             <Search className="w-12 h-12 text-muted-foreground" />
           </div>
-          <h3 className="text-lg font-semibold mb-2">没有找到相关结果</h3>
+          <h3 className="text-lg font-semibold mb-2">{t('searchResults.noResultsFound')}</h3>
           <p className="text-muted-foreground mb-4">
-            尝试使用不同的关键词或检查拼写
+            {t('searchResults.tryDifferentKeywords')}
           </p>
           <Button variant="outline" onClick={onClearSearch}>
-            返回浏览工具
+            {t('searchResults.backToBrowse')}
           </Button>
         </div>
       ) : (
@@ -135,7 +138,7 @@ export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResu
           {searchResults.tools.length > 0 && (
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
-                <h2 className="text-xl font-semibold">工具</h2>
+                <h2 className="text-xl font-semibold">{t('searchResults.tools')}</h2>
                 <Badge variant="secondary">{searchResults.tools.length} 个</Badge>
               </div>
               
@@ -163,7 +166,7 @@ export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResu
                     </CardHeader>
                     <CardContent>
                       <CardDescription className="mb-3">
-                        {highlightText(tool.description || '', query)}
+                        {highlightText(i18nTools.getToolDescription(t, tool.id, tool.description || ''), query)}
                       </CardDescription>
                       <div className="flex items-center justify-between text-sm text-muted-foreground">
                         <span>{tool.shortcuts.length} 个快捷键</span>
@@ -188,7 +191,7 @@ export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResu
           {searchResults.shortcuts.length > 0 && (
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
-                <h2 className="text-xl font-semibold">快捷键</h2>
+                <h2 className="text-xl font-semibold">{t('searchResults.shortcuts')}</h2>
                 <Badge variant="secondary">{searchResults.shortcuts.length} 个</Badge>
               </div>
               
@@ -212,7 +215,7 @@ export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResu
                           </div>
                           
                           <div className="font-medium mb-2">
-                            {highlightText(result.shortcut.description, query)}
+                            {highlightText(i18nTools.getShortcutDescription(t, result.shortcut.description), query)}
                           </div>
                           
                           <div className="flex items-center space-x-2">
@@ -231,7 +234,7 @@ export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResu
                         
                         <div className="flex flex-col items-end space-y-1 ml-4">
                           <Badge variant="outline" className="text-xs">
-                            {result.shortcut.category}
+                            {i18nTools.getShortcutCategory(t, result.shortcut.category)}
                           </Badge>
                           <Badge variant="outline" className="text-xs">
                             {result.shortcut.platform === 'all' ? '全平台' : result.shortcut.platform.toUpperCase()}

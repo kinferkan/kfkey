@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { toolsData, favoriteService } from '@/data/tools'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 interface SidebarProps {
   selectedCategory: string
@@ -21,6 +22,7 @@ const categoryIcons = {
 }
 
 export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onToggleFavorites, onToolSelect }: SidebarProps) {
+  const { t } = useTranslation()
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['ide'])
   const favoriteTools = favoriteService.getFavoriteTools()
 
@@ -35,7 +37,7 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
   return (
     <div className="h-[calc(100vh-4rem)] flex flex-col">
       <div className="p-4 border-b">
-        <h2 className="font-semibold text-lg mb-3">工具分类</h2>
+        <h2 className="font-semibold text-lg mb-3">{t('navigation.categories')}</h2>
         
         {/* 收藏夹 */}
         <Button
@@ -44,7 +46,7 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
           onClick={() => onToggleFavorites(!showFavorites)}
         >
           <Heart className={`mr-2 h-4 w-4 ${showFavorites ? 'fill-current' : ''}`} />
-          我的收藏
+          {t('common.favorites')}
           <Badge variant="secondary" className="ml-auto">
             {favoriteTools.length}
           </Badge>
@@ -59,7 +61,7 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
           }}
         >
           <Star className="mr-2 h-4 w-4" />
-          全部工具
+          {t('navigation.allTools')}
           <Badge variant="secondary" className="ml-auto">
             {toolsData.reduce((acc, cat) => acc + cat.tools.length, 0)}
           </Badge>
@@ -92,7 +94,7 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
                     <ChevronRight className="mr-2 h-4 w-4" />
                   )}
                   <Icon className="mr-2 h-4 w-4" />
-                  {category.name}
+                  {t(category.name)}
                   <Badge variant="secondary" className="ml-auto">
                     {category.tools.length}
                   </Badge>

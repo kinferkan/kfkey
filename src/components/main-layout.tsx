@@ -7,13 +7,16 @@ import { Sidebar } from '@/components/sidebar'
 import { ToolGrid } from '@/components/tool-grid'
 import { ToolDetail } from '@/components/tool-detail'
 import { SearchResults } from '@/components/search-results'
+import { LanguageSwitcher } from '@/components/language-switcher'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tool } from '@/types'
+import { useTranslation } from 'react-i18next'
 
 export function MainLayout() {
   const { theme, setTheme } = useTheme()
+  const { t } = useTranslation()
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
@@ -47,7 +50,7 @@ export function MainLayout() {
         e.preventDefault() // 阻止默认行为
         
         // 聚焦搜索框
-        const searchInput = document.querySelector('input[placeholder*="搜索"]') as HTMLInputElement
+        const searchInput = document.querySelector('input[type="text"]') as HTMLInputElement
         if (searchInput) {
           searchInput.focus()
         }
@@ -102,7 +105,7 @@ export function MainLayout() {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="搜索工具或快捷键... (Ctrl+K)"
+                placeholder={t('common.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
                 onKeyDown={(e) => {
@@ -143,7 +146,7 @@ export function MainLayout() {
             <div className="absolute top-12 right-0 bg-background border border-border rounded-lg shadow-lg p-4 w-64 z-50">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold">设置</h3>
+                  <h3 className="text-lg font-semibold">{t('common.settings')}</h3>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -156,42 +159,20 @@ export function MainLayout() {
                 
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">主题模式</span>
+                    <span className="text-sm text-muted-foreground">{t('common.theme')}</span>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                       className="h-8 px-3"
                     >
-                      {theme === 'dark' ? '切换到亮色' : '切换到暗色'}
+                      {theme === 'dark' ? t('common.light') : t('common.dark')}
                     </Button>
                   </div>
                   
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">键盘布局</span>
-                    <Select defaultValue="qwerty">
-                      <SelectTrigger className="w-24 h-8">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="qwerty">QWERTY</SelectItem>
-                        <SelectItem value="dvorak">Dvorak</SelectItem>
-                        <SelectItem value="colemak">Colemak</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">语言</span>
-                    <Select defaultValue="zh">
-                      <SelectTrigger className="w-20 h-8">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="zh">中文</SelectItem>
-                        <SelectItem value="en">English</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <span className="text-sm text-muted-foreground">{t('common.language')}</span>
+                    <LanguageSwitcher />
                   </div>
                   
                   <div className="pt-2 border-t border-border">

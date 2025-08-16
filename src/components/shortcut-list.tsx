@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Shortcut } from '@/types'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
+import { i18nTools } from '@/utils/i18n-tools'
 
 interface ShortcutListProps {
   shortcuts: Shortcut[]
@@ -14,6 +16,7 @@ interface ShortcutListProps {
 }
 
 export function ShortcutList({ shortcuts, searchQuery }: ShortcutListProps) {
+  const { t } = useTranslation()
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [sortBy, setSortBy] = useState<'category' | 'description'>('category')
 
@@ -62,9 +65,9 @@ export function ShortcutList({ shortcuts, searchQuery }: ShortcutListProps) {
         <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
           <Filter className="w-12 h-12 text-muted-foreground" />
         </div>
-        <h3 className="text-lg font-semibold mb-2">没有找到快捷键</h3>
+        <h3 className="text-lg font-semibold mb-2">{t('shortcutList.noShortcutsFound')}</h3>
         <p className="text-muted-foreground">
-          尝试调整搜索条件或筛选选项
+          {t('shortcutList.adjustFilters')}
         </p>
       </div>
     )
@@ -75,15 +78,15 @@ export function ShortcutList({ shortcuts, searchQuery }: ShortcutListProps) {
       {/* 统计信息 */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-muted-foreground">
-          共 {shortcuts.length} 个快捷键，分布在 {sortedCategories.length} 个分类中
+          {t('shortcutList.totalShortcuts', { count: shortcuts.length, categories: sortedCategories.length })}
         </div>
         <Select value={sortBy} onValueChange={(value: 'category' | 'description') => setSortBy(value)}>
           <SelectTrigger className="w-32">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="category">按分类</SelectItem>
-            <SelectItem value="description">按描述</SelectItem>
+            <SelectItem value="category">{t('shortcutList.byCategory')}</SelectItem>
+            <SelectItem value="description">{t('shortcutList.byDescription')}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -96,7 +99,7 @@ export function ShortcutList({ shortcuts, searchQuery }: ShortcutListProps) {
             <Card key={category}>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  {category}
+                  {i18nTools.getShortcutCategory(t, category)}
                   <Badge variant="secondary">
                     {groupedShortcuts[category].length} 个
                   </Badge>
@@ -110,9 +113,9 @@ export function ShortcutList({ shortcuts, searchQuery }: ShortcutListProps) {
                       className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors"
                     >
                       <div className="flex-1">
-                        <div className="font-medium mb-2">
-                          {highlightText(shortcut.description, searchQuery)}
-                        </div>
+                      <div className="font-medium mb-2">
+                        {highlightText(i18nTools.getShortcutDescription(t, shortcut.description), searchQuery)}
+                      </div>
                         <div className="flex items-center space-x-2">
                           {shortcut.keys.map((key, index) => (
                             <div key={index} className="flex items-center">
@@ -129,7 +132,7 @@ export function ShortcutList({ shortcuts, searchQuery }: ShortcutListProps) {
                       
                       <div className="flex items-center space-x-2 ml-4">
                         <Badge variant="outline" className="text-xs">
-                          {shortcut.platform === 'all' ? '全平台' : shortcut.platform.toUpperCase()}
+                          {shortcut.platform === 'all' ? t('shortcutList.allPlatforms') : shortcut.platform.toUpperCase()}
                         </Badge>
                         <Button
                           variant="ghost"
@@ -163,7 +166,7 @@ export function ShortcutList({ shortcuts, searchQuery }: ShortcutListProps) {
               >
                 <div className="flex-1">
                   <div className="font-medium mb-2">
-                    {highlightText(shortcut.description, searchQuery)}
+                    {highlightText(i18nTools.getShortcutDescription(t, shortcut.description), searchQuery)}
                   </div>
                   <div className="flex items-center space-x-2">
                     {shortcut.keys.map((key, index) => (
@@ -181,10 +184,10 @@ export function ShortcutList({ shortcuts, searchQuery }: ShortcutListProps) {
                 
                 <div className="flex items-center space-x-2 ml-4">
                   <Badge variant="outline" className="text-xs">
-                    {shortcut.category}
+                    {i18nTools.getShortcutCategory(t, shortcut.category)}
                   </Badge>
                   <Badge variant="outline" className="text-xs">
-                    {shortcut.platform === 'all' ? '全平台' : shortcut.platform.toUpperCase()}
+                    {shortcut.platform === 'all' ? t('shortcutList.allPlatforms') : shortcut.platform.toUpperCase()}
                   </Badge>
                   <Button
                     variant="ghost"

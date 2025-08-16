@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Shortcut, Platform } from '@/types'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
 
 interface KeyboardHeatmapProps {
   shortcuts: Shortcut[]
@@ -39,6 +40,7 @@ const getKeyboardLayout = (platform: Platform) => {
 }
 
 export function KeyboardHeatmap({ shortcuts, platform }: KeyboardHeatmapProps) {
+  const { t } = useTranslation()
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [hoveredKey, setHoveredKey] = useState<string | null>(null)
 
@@ -305,13 +307,13 @@ export function KeyboardHeatmap({ shortcuts, platform }: KeyboardHeatmapProps) {
                               ))}
                               {keyShortcuts.length > 3 && (
                                 <div className="text-xs text-muted-foreground">
-                                  还有 {keyShortcuts.length - 3} 个快捷键...
+                                  {t('keyboardHeatmap.moreShortcuts', { count: keyShortcuts.length - 3 })}
                                 </div>
                               )}
                             </div>
                           ) : (
                             <div className="text-xs text-muted-foreground mt-1">
-                              无快捷键
+                              {t('keyboardHeatmap.noShortcuts')}
                             </div>
                           )}
                         </div>
@@ -326,26 +328,26 @@ export function KeyboardHeatmap({ shortcuts, platform }: KeyboardHeatmapProps) {
 
         {/* 热度图例 */}
         <div className="flex items-center justify-center space-x-4 text-sm">
-          <span className="text-muted-foreground">使用频率:</span>
+          <span className="text-muted-foreground">{t('keyboardHeatmap.usageFrequency')}:</span>
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 rounded bg-muted border"></div>
-            <span>无</span>
+            <span>{t('keyboardHeatmap.none')}</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 rounded bg-blue-100 dark:bg-blue-900/30 border"></div>
-            <span>低</span>
+            <span>{t('keyboardHeatmap.low')}</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 rounded bg-blue-200 dark:bg-blue-800/40 border"></div>
-            <span>中</span>
+            <span>{t('keyboardHeatmap.medium')}</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 rounded bg-blue-400 dark:bg-blue-600 border"></div>
-            <span>高</span>
+            <span>{t('keyboardHeatmap.high')}</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-4 h-4 rounded bg-blue-600 dark:bg-blue-500 border"></div>
-            <span>极高</span>
+            <span>{t('keyboardHeatmap.veryHigh')}</span>
           </div>
         </div>
 
@@ -355,7 +357,7 @@ export function KeyboardHeatmap({ shortcuts, platform }: KeyboardHeatmapProps) {
             <CardHeader>
               <div className="flex items-center space-x-2">
                 <Badge variant="outline">{selectedKey}</Badge>
-                <span className="font-medium">相关快捷键</span>
+                <span className="font-medium">{t('keyboardHeatmap.relatedShortcuts')}</span>
               </div>
             </CardHeader>
             <CardContent>

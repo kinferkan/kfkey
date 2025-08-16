@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge'
 import { toolsData, favoriteService, popularTools } from '@/data/tools'
 import { Tool } from '@/types'
 import { cn } from '@/lib/utils'
+import { useTranslation } from 'react-i18next'
+import { i18nTools } from '@/utils/i18n-tools'
 
 interface ToolGridProps {
   selectedCategory: string
@@ -15,6 +17,7 @@ interface ToolGridProps {
 }
 
 export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavoriteChange }: ToolGridProps) {
+  const { t } = useTranslation()
   const [sortBy, setSortBy] = useState<'name' | 'popularity' | 'updated'>('popularity')
   const [refreshKey, setRefreshKey] = useState(0)
 
@@ -60,11 +63,11 @@ export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavo
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">
-            {showFavorites ? '我的收藏' : selectedCategory === 'all' ? '全部工具' : 
-             toolsData.find(cat => cat.id === selectedCategory)?.name || '工具'}
+            {showFavorites ? t('toolGrid.myFavorites') : selectedCategory === 'all' ? t('toolGrid.allTools') : 
+             toolsData.find(cat => cat.id === selectedCategory)?.name || t('toolGrid.tools')}
           </h1>
           <p className="text-muted-foreground mt-1">
-            找到 {tools.length} 个工具
+            {t('toolGrid.foundTools', { count: tools.length })}
           </p>
         </div>
         
@@ -75,14 +78,14 @@ export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavo
             onClick={() => setSortBy('popularity')}
           >
             <TrendingUp className="w-4 h-4 mr-1" />
-            热度
+            {t('toolGrid.popularity')}
           </Button>
           <Button
             variant={sortBy === 'name' ? 'default' : 'outline'}
             size="sm"
             onClick={() => setSortBy('name')}
           >
-            名称
+            {t('toolGrid.name')}
           </Button>
           <Button
             variant={sortBy === 'updated' ? 'default' : 'outline'}
@@ -90,7 +93,7 @@ export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavo
             onClick={() => setSortBy('updated')}
           >
             <Clock className="w-4 h-4 mr-1" />
-            更新
+            {t('toolGrid.updated')}
           </Button>
         </div>
       </div>
@@ -100,7 +103,7 @@ export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavo
         <div className="space-y-4">
           <div className="flex items-center space-x-2">
             <Star className="w-5 h-5 text-yellow-500" />
-            <h2 className="text-xl font-semibold">热门推荐</h2>
+            <h2 className="text-xl font-semibold">{t('toolGrid.hotRecommendations')}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {popularTools.slice(0, 3).map((tool) => (
@@ -118,7 +121,7 @@ export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavo
                       <div>
                         <CardTitle className="text-lg">{tool.name}</CardTitle>
                         <Badge variant="secondary" className="text-xs">
-                          热门
+                          {t('toolGrid.hot')}
                         </Badge>
                       </div>
                     </div>
@@ -139,10 +142,10 @@ export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavo
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="mb-3">
-                    {tool.description}
+                    {i18nTools.getToolDescription(t, tool.id, tool.description)}
                   </CardDescription>
                   <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <span>{tool.shortcuts.length} 个快捷键</span>
+                    <span>{t('toolGrid.shortcuts', { count: tool.shortcuts.length })}</span>
                     <div className="flex items-center space-x-1">
                       <TrendingUp className="w-3 h-3" />
                       <span>{tool.popularity}%</span>
@@ -196,10 +199,10 @@ export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavo
             </CardHeader>
             <CardContent>
               <CardDescription className="mb-4 line-clamp-2">
-                {tool.description}
+                {i18nTools.getToolDescription(t, tool.id, tool.description)}
               </CardDescription>
               <div className="flex items-center justify-between text-sm text-muted-foreground">
-                <span>{tool.shortcuts.length} 个快捷键</span>
+                <span>{t('toolGrid.shortcuts', { count: tool.shortcuts.length })}</span>
                 <div className="flex items-center space-x-1">
                   <TrendingUp className="w-3 h-3" />
                   <span>{tool.popularity}%</span>
@@ -207,7 +210,7 @@ export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavo
               </div>
               <div className="mt-3 pt-3 border-t">
                 <div className="text-xs text-muted-foreground">
-                  更新于 {tool.lastUpdated.toLocaleDateString('zh-CN')}
+                  {t('toolGrid.updatedOn', { date: tool.lastUpdated.toLocaleDateString() })}
                 </div>
               </div>
             </CardContent>
@@ -222,10 +225,10 @@ export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavo
             <Heart className="w-12 h-12 text-muted-foreground" />
           </div>
           <h3 className="text-lg font-semibold mb-2">
-            {showFavorites ? '还没有收藏的工具' : '暂无工具'}
+            {showFavorites ? t('toolGrid.noFavoriteTools') : t('toolGrid.noTools')}
           </h3>
           <p className="text-muted-foreground">
-            {showFavorites ? '点击工具卡片上的心形图标来收藏工具' : '该分类下暂时没有工具'}
+            {showFavorites ? t('toolGrid.clickHeartToFavorite') : t('toolGrid.noCategoryTools')}
           </p>
         </div>
       )}

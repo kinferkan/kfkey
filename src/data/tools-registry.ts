@@ -54,12 +54,12 @@ export const TOOL_ICONS = {
 export const toolsRegistry: ToolCategory[] = [
   {
     id: 'ide-editors',
-    name: 'IDE/编辑器',
+    name: 'categories.ide',
     tools: [
       {
         id: 'vscode',
         name: 'Visual Studio Code',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS.vscode,
         shortcuts: vscodeShortcuts,
         popularity: 95,
@@ -69,7 +69,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'sublime',
         name: 'Sublime Text',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS.sublime,
         shortcuts: sublimeShortcuts,
         popularity: 88,
@@ -79,7 +79,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'intellij-java',
         name: 'IntelliJ IDEA',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS['intellij-java'],
         shortcuts: intellijJavaShortcuts,
         popularity: 92,
@@ -89,7 +89,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'eclipse',
         name: 'Eclipse IDE',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS.eclipse,
         shortcuts: eclipseShortcuts,
         popularity: 75,
@@ -99,7 +99,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'android-studio',
         name: 'Android Studio',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS['android-studio'],
         shortcuts: androidStudioShortcuts,
         popularity: 85,
@@ -109,7 +109,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'xcode',
         name: 'Xcode',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS.xcode,
         shortcuts: xcodeShortcuts,
         popularity: 82,
@@ -119,7 +119,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'hbuilderx',
         name: 'HBuilder X',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS.hbuilderx,
         shortcuts: hbuilderXShortcuts,
         popularity: 75,
@@ -129,7 +129,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'webstorm',
         name: 'WebStorm',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS.webstorm,
         shortcuts: webstormShortcuts,
         popularity: 87,
@@ -139,7 +139,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'goland',
         name: 'GoLand',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS.goland,
         shortcuts: golandShortcuts,
         popularity: 86,
@@ -149,7 +149,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'pycharm',
         name: 'PyCharm',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS.pycharm,
         shortcuts: pycharmShortcuts,
         popularity: 89,
@@ -159,7 +159,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'clion',
         name: 'CLion',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS.clion,
         shortcuts: clionShortcuts,
         popularity: 84,
@@ -169,7 +169,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'atom',
         name: 'Atom',
-        category: 'IDE/编辑器',
+        category: 'categories.ide',
         icon: TOOL_ICONS.atom,
         shortcuts: atomShortcuts,
         popularity: 70,
@@ -180,12 +180,12 @@ export const toolsRegistry: ToolCategory[] = [
   },
   {
     id: 'design-tools',
-    name: '设计工具',
+    name: 'categories.design',
     tools: [
       {
         id: 'photoshop',
         name: 'Adobe Photoshop',
-        category: '设计工具',
+        category: 'categories.design',
         icon: TOOL_ICONS.photoshop,
         shortcuts: photoshopShortcuts,
         popularity: 92,
@@ -195,7 +195,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'figma',
         name: 'Figma',
-        category: '设计工具',
+        category: 'categories.design',
         icon: TOOL_ICONS.figma,
         shortcuts: figmaShortcuts,
         popularity: 89,
@@ -206,12 +206,12 @@ export const toolsRegistry: ToolCategory[] = [
   },
   {
     id: 'browser-tools',
-    name: '浏览器工具',
+    name: 'categories.browser',
     tools: [
       {
         id: 'chrome-devtools',
         name: 'Chrome DevTools',
-        category: '浏览器工具',
+        category: 'categories.browser',
         icon: TOOL_ICONS['chrome-devtools'],
         shortcuts: chromeDevtoolsShortcuts,
         popularity: 93,
@@ -221,7 +221,7 @@ export const toolsRegistry: ToolCategory[] = [
       {
         id: 'firefox-devtools',
         name: 'Firefox DevTools',
-        category: '浏览器工具',
+        category: 'categories.browser',
         icon: TOOL_ICONS['firefox-devtools'],
         shortcuts: firefoxDevtoolsShortcuts,
         popularity: 88,

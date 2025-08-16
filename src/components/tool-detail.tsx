@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { KeyboardHeatmap } from '@/components/keyboard-heatmap'
 import { ShortcutList } from '@/components/shortcut-list'
 import { Tool, Platform } from '@/types'
+import { useTranslation } from 'react-i18next'
 
 // 检测用户操作系统
 const detectUserPlatform = (): Platform => {
@@ -28,12 +29,12 @@ const detectUserPlatform = (): Platform => {
 }
 
 // 获取平台显示名称
-const getPlatformDisplayName = (platform: Platform): string => {
+const getPlatformDisplayName = (platform: Platform, t: any): string => {
   switch (platform) {
     case 'mac': return 'macOS'
     case 'win': return 'Windows'
     case 'linux': return 'Linux'
-    case 'all': return '全平台'
+    case 'all': return t('toolDetail.allPlatforms')
     default: return 'Windows'
   }
 }
@@ -44,6 +45,7 @@ interface ToolDetailProps {
 }
 
 export function ToolDetail({ tool, onBack }: ToolDetailProps) {
+  const { t } = useTranslation()
   const [searchQuery, setSearchQuery] = useState('')
   const [detectedPlatform, setDetectedPlatform] = useState<Platform>('win')
   // 智能平台选择：Xcode强制macOS，其他工具使用检测到的系统
@@ -130,7 +132,7 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="搜索快捷键..."
+              placeholder={t('toolDetail.searchShortcuts')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
@@ -147,7 +149,7 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">全平台</SelectItem>
+                <SelectItem value="all">{t('toolDetail.allPlatforms')}</SelectItem>
                 <SelectItem value="win">Windows</SelectItem>
                 <SelectItem value="mac">macOS</SelectItem>
                 <SelectItem value="linux">Linux</SelectItem>
@@ -155,14 +157,14 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
             </Select>
             {tool.id === 'xcode' && (
               <Badge variant="outline" className="text-xs">
-                仅支持 macOS
+                {t('toolDetail.macOSOnly')}
               </Badge>
             )}
             {tool.id !== 'xcode' && (
               <div className="flex items-center space-x-2">
                 <Monitor className="w-4 h-4 text-muted-foreground" />
                 <Badge variant="secondary" className="text-xs">
-                  检测到: {getPlatformDisplayName(detectedPlatform)}
+                  {t('toolDetail.detected')}: {getPlatformDisplayName(detectedPlatform, t)}
                 </Badge>
               </div>
             )}
@@ -172,7 +174,7 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">全部分类</SelectItem>
+                <SelectItem value="all">{t('toolDetail.allCategories')}</SelectItem>
                 {categories.map(category => (
                   <SelectItem key={category} value={category}>
                     {category}
@@ -184,7 +186,7 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
         </div>
         
         <div className="mt-3 text-sm text-muted-foreground">
-          显示 {filteredShortcuts.length} / {tool.shortcuts.length} 个快捷键
+          {t('toolDetail.showing', { filtered: filteredShortcuts.length, total: tool.shortcuts.length })}
         </div>
       </div>
 
@@ -192,16 +194,16 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
       <div className="container mx-auto px-6 py-6">
         <Tabs defaultValue="heatmap" className="space-y-6">
           <TabsList className="grid w-full grid-cols-2 lg:w-96">
-            <TabsTrigger value="heatmap">键盘热力图</TabsTrigger>
-            <TabsTrigger value="list">快捷键列表</TabsTrigger>
+            <TabsTrigger value="heatmap">{t('toolDetail.keyboardHeatmap')}</TabsTrigger>
+            <TabsTrigger value="list">{t('toolDetail.shortcutList')}</TabsTrigger>
           </TabsList>
           
           <TabsContent value="heatmap" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>交互式键盘热力图</CardTitle>
+                <CardTitle>{t('toolDetail.interactiveKeyboardHeatmap')}</CardTitle>
                 <CardDescription>
-                  点击键盘按键查看对应的快捷键，颜色深度表示使用频率
+                  {t('toolDetail.heatmapDescription')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
