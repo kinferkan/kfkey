@@ -5,6 +5,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Shortcut, Platform } from '@/types'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
+import { i18nTools } from '@/utils/i18n-tools'
 
 interface KeyboardHeatmapProps {
   shortcuts: Shortcut[]
@@ -299,7 +300,7 @@ export function KeyboardHeatmap({ shortcuts, platform }: KeyboardHeatmapProps) {
                             <div className="mt-1">
                               {keyShortcuts.slice(0, 3).map((shortcut, index) => (
                                 <div key={index} className="text-xs text-muted-foreground">
-                                  {shortcut.keys.join(' + ')}: {shortcut.description}
+                                  {shortcut.keys.join(' + ')}: {i18nTools.getShortcutDescription(t, shortcut.description)}
                                 </div>
                               ))}
                               {keyShortcuts.length > 3 && (
@@ -362,12 +363,12 @@ export function KeyboardHeatmap({ shortcuts, platform }: KeyboardHeatmapProps) {
                 {relatedShortcuts.map((shortcut) => (
                   <div key={shortcut.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
                     <div>
-                      <div className="font-medium">{shortcut.description}</div>
+                      <div className="font-medium">{i18nTools.getShortcutDescription(t, shortcut.description)}</div>
                       <div className="text-sm text-muted-foreground mt-1">
                         {shortcut.keys.join(' + ')}
                       </div>
                     </div>
-                    <Badge variant="secondary">{shortcut.category}</Badge>
+                    <Badge variant="secondary">{i18nTools.getShortcutCategory(t, shortcut.category)}</Badge>
                   </div>
                 ))}
               </div>

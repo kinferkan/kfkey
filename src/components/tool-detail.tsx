@@ -178,7 +178,7 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
                 <SelectItem value="all">{t('toolDetail.allCategories')}</SelectItem>
                 {categories.map(category => (
                   <SelectItem key={category} value={category}>
-                    {category}
+                    {i18nTools.getShortcutCategory(t, category)}
                   </SelectItem>
                 ))}
               </SelectContent>
