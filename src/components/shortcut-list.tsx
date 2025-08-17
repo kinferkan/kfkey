@@ -101,7 +101,7 @@ export function ShortcutList({ shortcuts, searchQuery }: ShortcutListProps) {
                 <CardTitle className="flex items-center justify-between">
                   {i18nTools.getShortcutCategory(t, category)}
                   <Badge variant="secondary">
-                    {groupedShortcuts[category].length} 个
+                    {groupedShortcuts[category].length} {t('shortcutList.items')}
                   </Badge>
                 </CardTitle>
               </CardHeader>

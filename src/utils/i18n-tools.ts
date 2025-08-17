@@ -31,11 +31,14 @@ export function useShortcutCategory(category: string) {
     '导航': 'navigation',
     '编辑': 'editing',
     '搜索': 'search',
+    '搜索与替换': 'search',
+    '搜索替换': 'search',
     '调试': 'debugging',
     '重构': 'refactoring',
     '版本控制': 'version_control',
     '视图': 'view',
-    '窗口': 'window'
+    '窗口': 'window',
+    '窗口管理': 'window'
   }
   
   const key = categoryMap[category] || category.toLowerCase()
@@ -91,11 +94,14 @@ export const i18nTools = {
       '导航': 'navigation',
       '编辑': 'editing',
       '搜索': 'search',
+      '搜索与替换': 'search',
+      '搜索替换': 'search',
       '调试': 'debugging',
       '重构': 'refactoring',
       '版本控制': 'version_control',
       '视图': 'view',
-      '窗口': 'window'
+      '窗口': 'window',
+      '窗口管理': 'window'
     }
     
     const key = categoryMap[category] || category.toLowerCase()

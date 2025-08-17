@@ -26,10 +26,10 @@
     "recentlyUsed": "Recently Used"
   },
   "categories": {
-    "ide": "IDE & Editors",
+    "ide": "IDEs & Editors",
     "design": "Design Tools",
     "browser": "Browser Tools",
-    "terminal": "Terminal & CLI",
+    "terminal": "Terminal & Command Line",
     "database": "Database Tools",
     "other": "Other Tools"
   },
@@ -76,11 +76,40 @@
   },
   "heatmap": {
     "title": "Keyboard Heatmap",
-    "description": "Interactive keyboard visualization showing shortcut key usage",
-    "clickKey": "Click on a key to see related shortcuts",
+    "description": "Interactive keyboard visualization of shortcut usage",
+    "clickKey": "Click a key to view related shortcuts",
     "noShortcuts": "No shortcuts found for this key",
-    "keyUsage": "Key Usage",
-    "relatedShortcuts": "Related Shortcuts"
+    "keyUsage": "Key usage",
+    "relatedShortcuts": "Related Shortcuts",
+    "keys": {
+      "esc": "Esc",
+      "f1": "F1",
+      "f2": "F2",
+      "f3": "F3",
+      "f4": "F4",
+      "f5": "F5",
+      "f6": "F6",
+      "f7": "F7",
+      "f8": "F8",
+      "f9": "F9",
+      "f10": "F10",
+      "f11": "F11",
+      "f12": "F12",
+      "backspace": "Backspace",
+      "delete": "Delete",
+      "enter": "Enter",
+      "return": "Return",
+      "tab": "Tab",
+      "caps": "Caps",
+      "shift": "Shift",
+      "ctrl": "Ctrl",
+      "alt": "Alt",
+      "win": "Win",
+      "cmd": "Cmd",
+      "option": "Option",
+      "fn": "Fn",
+      "space": "Space"
+    }
   },
   "favorites": {
     "title": "My Favorites",
@@ -88,7 +117,7 @@
     "addToFavorites": "Add to Favorites",
     "removeFromFavorites": "Remove from Favorites",
     "noFavorites": "No favorites yet",
-    "addSomeFavorites": "Add some tools to your favorites to see them here"
+    "addSomeFavorites": "Add some tools to favorites to view them here"
   },
   "search": {
     "title": "Search Results",
@@ -96,20 +125,20 @@
     "foundResults": "Found {{count}} results for \"{{query}}\"",
     "noResults": "No results found for \"{{query}}\"",
     "suggestions": "Try searching for:",
-    "popularSearches": "Popular searches",
-    "recentSearches": "Recent searches"
+    "popularSearches": "Popular Searches",
+    "recentSearches": "Recent Searches"
   },
   "footer": {
-    "description": "Professional keyboard shortcuts navigation platform for developers",
-    "allRightsReserved": "All rights reserved",
+    "description": "Professional developer keyboard shortcut navigation platform",
+    "allRightsReserved": "All Rights Reserved",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
     "support": "Support"
   },
   "meta": {
-    "title": "KeyFlow - Developer Keyboard Shortcuts Navigation Platform",
-    "description": "KeyFlow is a professional keyboard shortcuts navigation platform providing comprehensive shortcut collections for mainstream IDEs and editors like VSCode, IntelliJ IDEA, WebStorm, PyCharm. Features interactive heatmaps and global search to boost developer productivity.",
-    "keywords": "keyboard shortcuts, developer tools, VSCode shortcuts, IntelliJ IDEA shortcuts, WebStorm shortcuts, PyCharm shortcuts, programmer tools, IDE shortcuts, editor shortcuts, development efficiency"
+    "title": "KeyFlow - Developer Shortcut Navigation Platform",
+    "description": "KeyFlow is a professional shortcut navigation platform that provides comprehensive shortcuts for mainstream IDEs and editors such as VSCode, IntelliJ IDEA, WebStorm, and PyCharm. With interactive heatmap and global search features, it enhances developer productivity.",
+    "keywords": "shortcuts, developer tools, VSCode shortcuts, IntelliJ IDEA shortcuts, WebStorm shortcuts, PyCharm shortcuts, programmer tools, IDE shortcuts, editor shortcuts, development efficiency"
   },
   "toolGrid": {
     "myFavorites": "My Favorites",
@@ -126,7 +155,8 @@
     "noFavoriteTools": "No favorite tools yet",
     "noTools": "No tools available",
     "clickHeartToFavorite": "Click the heart icon on tool cards to favorite tools",
-    "noCategoryTools": "No tools in this category yet"
+    "noCategoryTools": "No tools available in this category",
+    "items": "items"
   },
   "toolDetail": {
     "allPlatforms": "All Platforms",
@@ -138,7 +168,12 @@
     "keyboardHeatmap": "Keyboard Heatmap",
     "shortcutList": "Shortcut List",
     "interactiveKeyboardHeatmap": "Interactive Keyboard Heatmap",
-    "heatmapDescription": "Click keyboard keys to view corresponding shortcuts, color depth indicates usage frequency"
+    "heatmapDescription": "Click keyboard keys to view corresponding shortcuts. Color intensity represents usage frequency",
+    "platforms": {
+      "win": "Windows",
+      "mac": "macOS",
+      "linux": "Linux"
+    }
   },
   "keyboardHeatmap": {
     "usageFrequency": "Usage Frequency",
@@ -149,15 +184,17 @@
     "veryHigh": "Very High",
     "relatedShortcuts": "Related Shortcuts",
     "noShortcuts": "No shortcuts",
-    "moreShortcuts": "{{count}} more shortcuts..."
+    "moreShortcuts": "{{count}} more shortcuts...",
+    "items": "items"
   },
   "shortcutList": {
-    "totalShortcuts": "{{count}} shortcuts in {{categories}} categories",
+    "totalShortcuts": "Total {{count}} shortcuts across {{categories}} categories",
     "byCategory": "By Category",
     "byDescription": "By Description",
     "allPlatforms": "All Platforms",
     "noShortcutsFound": "No shortcuts found",
-    "adjustFilters": "Try adjusting search criteria or filter options"
+    "adjustFilters": "Try adjusting search criteria or filter options",
+    "items": "items"
   },
   "searchResults": {
     "searchResults": "Search Results",
@@ -165,27 +202,29 @@
     "clearSearch": "Clear Search",
     "tools": "Tools",
     "shortcuts": "Shortcuts",
-    "noResultsFound": "No results found",
+    "noResultsFound": "No related results found",
     "tryDifferentKeywords": "Try using different keywords or check spelling",
-    "backToBrowse": "Back to Browse Tools"
+    "backToBrowse": "Back to Browse Tools",
+    "items": "items",
+    "allPlatforms": "All Platforms"
   },
   "toolDescriptions": {
-    "vscode": "Microsoft's lightweight code editor with support for multiple programming languages and rich plugin ecosystem.",
-    "sublime": "High-performance text editor known for its fast response and powerful multi-cursor editing features.",
-    "intellij-java": "JetBrains' Java IDE providing powerful code analysis, refactoring, and debugging features, the preferred tool for Java development.",
-    "eclipse": "Open-source integrated development environment primarily used for Java development, supporting multiple programming languages.",
+    "vscode": "A lightweight code editor developed by Microsoft, supporting multiple programming languages and a rich plugin ecosystem.",
+    "sublime": "A high-performance text editor known for its fast response and powerful multi-cursor editing features.",
+    "intellij-java": "A Java IDE developed by JetBrains, providing powerful code analysis, refactoring, and debugging features. It's the preferred tool for Java development.",
+    "eclipse": "An open-source integrated development environment, primarily used for Java development, supporting multiple programming languages.",
     "android-studio": "Google's official Android app development IDE, built on IntelliJ IDEA.",
-    "xcode": "Apple's official IDE for iOS and macOS app development, runs only on macOS.",
-    "hbuilderx": "Professional front-end IDE developed by DCloud, optimized for uni-app and 5+App development.",
-    "webstorm": "JetBrains' professional web front-end IDE providing powerful support for JavaScript and related technologies.",
-    "goland": "JetBrains' Go language IDE providing intelligent code assistance, debugging, and testing tools for Go development.",
-    "pycharm": "JetBrains' Python IDE providing intelligent code completion, inspection, debugging, and refactoring features.",
-    "clion": "JetBrains' C/C++ development environment providing intelligent code assistance and powerful debugging features.",
-    "atom": "Open-source text editor developed by GitHub, highly customizable, though discontinued but still has many users.",
+    "xcode": "Apple's official iOS and macOS app development IDE, runs only on macOS.",
+    "hbuilderx": "A professional front-end IDE developed by DCloud, optimized for uni-app and 5+App development.",
+    "webstorm": "A professional Web front-end IDE developed by JetBrains, providing strong support for JavaScript and related technologies.",
+    "goland": "A Go language IDE developed by JetBrains, providing intelligent code assistance, debugging, and testing tools for Go development.",
+    "pycharm": "A Python IDE developed by JetBrains, providing intelligent code completion, checking, debugging, and refactoring features.",
+    "clion": "A C/C++ development environment developed by JetBrains, providing intelligent code assistance and powerful debugging features.",
+    "atom": "An open-source text editor developed by GitHub, highly customizable. Although no longer updated, it still has a large user base.",
     "photoshop": "Adobe's professional image editing software, the industry standard for digital image processing.",
-    "figma": "Modern collaborative UI design tool supporting real-time collaboration and prototyping.",
-    "chrome-devtools": "Built-in developer tools in Google Chrome browser for web debugging and performance analysis.",
-    "firefox-devtools": "Built-in developer tools in Mozilla Firefox browser providing powerful web debugging and analysis features."
+    "figma": "A modern collaborative UI design tool that supports real-time collaboration and prototyping.",
+    "chrome-devtools": "Developer tools built into Google Chrome browser for web debugging and performance analysis.",
+    "firefox-devtools": "Developer tools built into Mozilla Firefox browser, providing powerful web debugging and analysis features."
   },
   "shortcutCategories": {
     "general": "General",

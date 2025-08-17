@@ -11,24 +11,24 @@ interface KeyboardHeatmapProps {
   platform: Platform
 }
 
-// Windows键盘布局定义
+// Windows键盘布局定义（使用国际化键名）
 const windowsKeyboardLayout = [
-  ['Esc', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'],
-  ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
-  ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\'],
-  ['Caps', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'", 'Enter'],
-  ['Shift-L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'Shift-R'],
-  ['Ctrl-L', 'Win-L', 'Alt-L', 'Space', 'Alt-R', 'Win-R', 'Menu', 'Ctrl-R']
+  ['esc', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'],
+  ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace'],
+  ['tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
+  ['caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'enter'],
+  ['shift-l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'shift-r'],
+  ['ctrl-l', 'win-l', 'alt-l', 'space', 'alt-r', 'win-r', 'menu', 'ctrl-r']
 ]
 
-// macOS键盘布局定义
+// macOS键盘布局定义（使用国际化键名）
 const macKeyboardLayout = [
-  ['Esc', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'],
-  ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Delete'],
-  ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\'],
-  ['Caps', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'", 'Return'],
-  ['Shift-L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'Shift-R'],
-  ['Fn', 'Ctrl-L', 'Option-L', 'Cmd-L', 'Space', 'Cmd-R', 'Option-R', 'Ctrl-R']
+  ['esc', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'],
+  ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'delete'],
+  ['tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
+  ['caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'return'],
+  ['shift-l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'shift-r'],
+  ['fn', 'ctrl-l', 'option-l', 'cmd-l', 'space', 'cmd-r', 'option-r', 'ctrl-r']
 ]
 
 // 获取对应平台的键盘布局
@@ -232,31 +232,26 @@ export function KeyboardHeatmap({ shortcuts, platform }: KeyboardHeatmapProps) {
 
   // 获取按键尺寸
   const getKeySize = (key: string) => {
-    switch (key) {
-      case 'Backspace':
-      case 'Delete':
-      case 'Enter':
-      case 'Return':
-      case 'Shift-L':
-      case 'Shift-R':
+    const normalizedKey = key.replace(/-[lr]$/, '').toLowerCase();
+    switch (normalizedKey) {
+      case 'backspace':
+      case 'delete':
+      case 'enter':
+      case 'return':
+      case 'shift':
         return 'h-10 px-4 min-w-16'
-      case 'Tab':
-      case 'Caps':
+      case 'tab':
+      case 'caps':
         return 'h-10 px-3 min-w-14'
-      case 'Space':
+      case 'space':
         return 'h-10 px-8 min-w-32'
-      case 'Ctrl-L':
-      case 'Ctrl-R':
-      case 'Alt-L':
-      case 'Alt-R':
-      case 'Win-L':
-      case 'Win-R':
-      case 'Option-L':
-      case 'Option-R':
-      case 'Cmd-L':
-      case 'Cmd-R':
+      case 'ctrl':
+      case 'alt':
+      case 'win':
+      case 'option':
+      case 'cmd':
         return 'h-10 px-2 min-w-12'
-      case 'Fn':
+      case 'fn':
         return 'h-10 px-1 min-w-8'
       default:
         return 'h-10 w-10'
@@ -276,6 +271,8 @@ export function KeyboardHeatmap({ shortcuts, platform }: KeyboardHeatmapProps) {
                 {row.map((key) => {
                   const keyShortcuts = getShortcutsForKey(key)
                   const heatLevel = getHeatLevel(key)
+                  // 获取显示的按键文本
+                  const displayKey = t(`heatmap.keys.${key.toLowerCase()}`, key);
                   
                   return (
                     <Tooltip key={key}>
@@ -285,7 +282,7 @@ export function KeyboardHeatmap({ shortcuts, platform }: KeyboardHeatmapProps) {
                         onMouseEnter={() => setHoveredKey(key)}
                         onMouseLeave={() => setHoveredKey(null)}
                       >
-                        {key}
+                        {displayKey}
                         {heatLevel > 0 && (
                           <Badge 
                             variant="secondary" 
@@ -297,7 +294,7 @@ export function KeyboardHeatmap({ shortcuts, platform }: KeyboardHeatmapProps) {
                       </TooltipTrigger>
                       <TooltipContent>
                         <div className="text-sm">
-                          <div className="font-medium">{key}</div>
+                          <div className="font-medium">{displayKey}</div>
                           {keyShortcuts.length > 0 ? (
                             <div className="mt-1">
                               {keyShortcuts.slice(0, 3).map((shortcut, index) => (
@@ -356,7 +353,7 @@ export function KeyboardHeatmap({ shortcuts, platform }: KeyboardHeatmapProps) {
           <Card>
             <CardHeader>
               <div className="flex items-center space-x-2">
-                <Badge variant="outline">{selectedKey}</Badge>
+                <Badge variant="outline">{t(`heatmap.keys.${selectedKey.toLowerCase()}`, selectedKey)}</Badge>
                 <span className="font-medium">{t('keyboardHeatmap.relatedShortcuts')}</span>
               </div>
             </CardHeader>

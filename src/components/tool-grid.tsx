@@ -178,7 +178,7 @@ export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavo
                   <div>
                     <CardTitle className="text-lg">{tool.name}</CardTitle>
                     <Badge variant="outline" className="text-xs mt-1">
-                      {tool.category}
+                      {t(`toolGrid.categories.${tool.category}`)}
                     </Badge>
                   </div>
                 </div>

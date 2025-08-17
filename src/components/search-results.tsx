@@ -139,7 +139,7 @@ export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResu
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
                 <h2 className="text-xl font-semibold">{t('searchResults.tools')}</h2>
-                <Badge variant="secondary">{searchResults.tools.length} 个</Badge>
+                <Badge variant="secondary">{searchResults.tools.length} {t('searchResults.items')}</Badge>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -169,7 +169,7 @@ export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResu
                         {highlightText(i18nTools.getToolDescription(t, tool.id, tool.description || ''), query)}
                       </CardDescription>
                       <div className="flex items-center justify-between text-sm text-muted-foreground">
-                        <span>{tool.shortcuts.length} 个快捷键</span>
+                        <span>{tool.shortcuts.length} {t('searchResults.items')}</span>
                         <div className="flex items-center space-x-1">
                           <TrendingUp className="w-3 h-3" />
                           <span>{tool.popularity}%</span>
@@ -192,7 +192,7 @@ export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResu
             <div className="space-y-4">
               <div className="flex items-center space-x-2">
                 <h2 className="text-xl font-semibold">{t('searchResults.shortcuts')}</h2>
-                <Badge variant="secondary">{searchResults.shortcuts.length} 个</Badge>
+                <Badge variant="secondary">{searchResults.shortcuts.length} {t('searchResults.items')}</Badge>
               </div>
               
               <div className="space-y-3">
@@ -237,7 +237,7 @@ export function SearchResults({ query, onToolSelect, onClearSearch }: SearchResu
                             {i18nTools.getShortcutCategory(t, result.shortcut.category)}
                           </Badge>
                           <Badge variant="outline" className="text-xs">
-                            {result.shortcut.platform === 'all' ? '全平台' : result.shortcut.platform.toUpperCase()}
+                            {result.shortcut.platform === 'all' ? t('searchResults.allPlatforms') : result.shortcut.platform.toUpperCase()}
                           </Badge>
                         </div>
                       </div>

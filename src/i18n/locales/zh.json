@@ -80,7 +80,36 @@
     "clickKey": "点击按键查看相关快捷键",
     "noShortcuts": "未找到此按键的快捷键",
     "keyUsage": "按键使用情况",
-    "relatedShortcuts": "相关快捷键"
+    "relatedShortcuts": "相关快捷键",
+    "keys": {
+      "esc": "Esc",
+      "f1": "F1",
+      "f2": "F2",
+      "f3": "F3",
+      "f4": "F4",
+      "f5": "F5",
+      "f6": "F6",
+      "f7": "F7",
+      "f8": "F8",
+      "f9": "F9",
+      "f10": "F10",
+      "f11": "F11",
+      "f12": "F12",
+      "backspace": "Backspace",
+      "delete": "Delete",
+      "enter": "Enter",
+      "return": "Return",
+      "tab": "Tab",
+      "caps": "Caps",
+      "shift": "Shift",
+      "ctrl": "Ctrl",
+      "alt": "Alt",
+      "win": "Win",
+      "cmd": "Cmd",
+      "option": "Option",
+      "fn": "Fn",
+      "space": "Space"
+    }
   },
   "favorites": {
     "title": "我的收藏",
@@ -126,7 +155,8 @@
     "noFavoriteTools": "还没有收藏的工具",
     "noTools": "暂无工具",
     "clickHeartToFavorite": "点击工具卡片上的心形图标来收藏工具",
-    "noCategoryTools": "该分类下暂时没有工具"
+    "noCategoryTools": "该分类下暂时没有工具",
+    "items": "个"
   },
   "toolDetail": {
     "allPlatforms": "全平台",
@@ -138,7 +168,12 @@
     "keyboardHeatmap": "键盘热力图",
     "shortcutList": "快捷键列表",
     "interactiveKeyboardHeatmap": "交互式键盘热力图",
-    "heatmapDescription": "点击键盘按键查看对应的快捷键，颜色深度表示使用频率"
+    "heatmapDescription": "点击键盘按键查看对应的快捷键，颜色深度表示使用频率",
+    "platforms": {
+      "win": "Windows",
+      "mac": "macOS",
+      "linux": "Linux"
+    }
   },
   "keyboardHeatmap": {
     "usageFrequency": "使用频率",
@@ -149,7 +184,8 @@
     "veryHigh": "极高",
     "relatedShortcuts": "相关快捷键",
     "noShortcuts": "无快捷键",
-    "moreShortcuts": "还有 {{count}} 个快捷键..."
+    "moreShortcuts": "还有 {{count}} 个快捷键...",
+    "items": "个"
   },
   "shortcutList": {
     "totalShortcuts": "共 {{count}} 个快捷键，分布在 {{categories}} 个分类中",
@@ -157,7 +193,8 @@
     "byDescription": "按描述",
     "allPlatforms": "全平台",
     "noShortcutsFound": "没有找到快捷键",
-    "adjustFilters": "尝试调整搜索条件或筛选选项"
+    "adjustFilters": "尝试调整搜索条件或筛选选项",
+    "items": "个"
   },
   "searchResults": {
     "searchResults": "搜索结果",
@@ -167,7 +204,9 @@
     "shortcuts": "快捷键",
     "noResultsFound": "没有找到相关结果",
     "tryDifferentKeywords": "尝试使用不同的关键词或检查拼写",
-    "backToBrowse": "返回浏览工具"
+    "backToBrowse": "返回浏览工具",
+    "items": "个",
+    "allPlatforms": "全平台"
   },
   "toolDescriptions": {
     "vscode": "微软开发的轻量级代码编辑器，支持多种编程语言和丰富的插件生态系统。",

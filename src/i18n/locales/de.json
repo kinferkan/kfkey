@@ -23,13 +23,13 @@
     "categories": "Kategorien",
     "allTools": "Alle Tools",
     "popularTools": "Beliebte Tools",
-    "recentlyUsed": "Kürzlich verwendet"
+    "recentlyUsed": "Zuletzt verwendet"
   },
   "categories": {
-    "ide": "IDE & Editoren",
+    "ide": "IDEs & Editoren",
     "design": "Design-Tools",
     "browser": "Browser-Tools",
-    "terminal": "Terminal & CLI",
+    "terminal": "Terminal & Befehlszeile",
     "database": "Datenbank-Tools",
     "other": "Andere Tools"
   },
@@ -55,7 +55,7 @@
     "firefoxdevtools": "Firefox DevTools"
   },
   "shortcuts": {
-    "title": "Tastenkürzel",
+    "title": "Tastaturkürzel",
     "description": "Beschreibung",
     "shortcut": "Tastenkürzel",
     "category": "Kategorie",
@@ -64,10 +64,10 @@
     "mac": "Mac",
     "linux": "Linux",
     "general": "Allgemein",
-    "editing": "Bearbeitung",
+    "editing": "Bearbeiten",
     "navigation": "Navigation",
     "search": "Suchen & Ersetzen",
-    "debugging": "Debugging",
+    "debugging": "Debuggen",
     "refactoring": "Refactoring",
     "version_control": "Versionskontrolle",
     "file_management": "Dateiverwaltung",
@@ -76,19 +76,48 @@
   },
   "heatmap": {
     "title": "Tastatur-Heatmap",
-    "description": "Interaktive Tastaturvisualisierung der Tastenkürzel-Nutzung",
-    "clickKey": "Klicken Sie auf eine Taste, um verwandte Tastenkürzel zu sehen",
-    "noShortcuts": "Keine Tastenkürzel für diese Taste gefunden",
+    "description": "Interaktive Tastaturvisualisierung der Verwendung von Verknüpfungen",
+    "clickKey": "Klicken Sie auf eine Taste, um verwandte Verknüpfungen anzuzeigen",
+    "noShortcuts": "Keine Verknüpfungen für diese Taste gefunden",
     "keyUsage": "Tastennutzung",
-    "relatedShortcuts": "Verwandte Tastenkürzel"
+    "relatedShortcuts": "Verwandte Verknüpfungen",
+    "keys": {
+      "esc": "Esc",
+      "f1": "F1",
+      "f2": "F2",
+      "f3": "F3",
+      "f4": "F4",
+      "f5": "F5",
+      "f6": "F6",
+      "f7": "F7",
+      "f8": "F8",
+      "f9": "F9",
+      "f10": "F10",
+      "f11": "F11",
+      "f12": "F12",
+      "backspace": "Backspace",
+      "delete": "Delete",
+      "enter": "Enter",
+      "return": "Return",
+      "tab": "Tab",
+      "caps": "Caps",
+      "shift": "Shift",
+      "ctrl": "Ctrl",
+      "alt": "Alt",
+      "win": "Win",
+      "cmd": "Cmd",
+      "option": "Option",
+      "fn": "Fn",
+      "space": "Space"
+    }
   },
   "favorites": {
     "title": "Meine Favoriten",
-    "description": "Ihre bevorzugten Tools und Tastenkürzel",
+    "description": "Ihre favorisierten Tools und Verknüpfungen",
     "addToFavorites": "Zu Favoriten hinzufügen",
     "removeFromFavorites": "Aus Favoriten entfernen",
     "noFavorites": "Noch keine Favoriten",
-    "addSomeFavorites": "Fügen Sie einige Tools zu Ihren Favoriten hinzu, um sie hier zu sehen"
+    "addSomeFavorites": "Fügen Sie einige Tools zu den Favoriten hinzu, um sie hier anzuzeigen"
   },
   "search": {
     "title": "Suchergebnisse",
@@ -96,20 +125,20 @@
     "foundResults": "{{count}} Ergebnisse für \"{{query}}\" gefunden",
     "noResults": "Keine Ergebnisse für \"{{query}}\" gefunden",
     "suggestions": "Versuchen Sie zu suchen nach:",
-    "popularSearches": "Beliebte Suchen",
-    "recentSearches": "Letzte Suchen"
+    "popularSearches": "Beliebte Suchanfragen",
+    "recentSearches": "Letzte Suchanfragen"
   },
   "footer": {
-    "description": "Professionelle Tastenkürzel-Navigationsplattform für Entwickler",
+    "description": "Professionelle Navigationsplattform für Entwickler-Tastenkürzel",
     "allRightsReserved": "Alle Rechte vorbehalten",
-    "privacyPolicy": "Datenschutzrichtlinie",
+    "privacyPolicy": "Datenschutzbestimmungen",
     "termsOfService": "Nutzungsbedingungen",
     "support": "Support"
   },
   "meta": {
-    "title": "KeyFlow - Entwickler-Tastenkürzel-Navigationsplattform",
-    "description": "KeyFlow ist eine professionelle Tastenkürzel-Navigationsplattform, die umfassende Tastenkürzel-Sammlungen für Mainstream-IDEs und -Editoren wie VSCode, IntelliJ IDEA, WebStorm, PyCharm bereitstellt. Mit interaktiven Heatmaps und globaler Suche zur Steigerung der Entwicklerproduktivität.",
-    "keywords": "Tastenkürzel, Entwicklertools, VSCode-Tastenkürzel, IntelliJ IDEA-Tastenkürzel, WebStorm-Tastenkürzel, PyCharm-Tastenkürzel, Programmierer-Tools, IDE-Tastenkürzel, Editor-Tastenkürzel, Entwicklungseffizienz"
+    "title": "KeyFlow - Navigationsplattform für Entwickler-Verknüpfungen",
+    "description": "KeyFlow ist eine professionelle Verknüpfungsnavigationsplattform, die umfassende Verknüpfungen für führende IDEs und Editoren wie VSCode, IntelliJ IDEA, WebStorm und PyCharm bietet. Mit interaktiver Heatmap und globaler Suchfunktion steigert sie die Produktivität von Entwicklern.",
+    "keywords": "Verknüpfungen, Entwicklertools, VSCode-Verknüpfungen, IntelliJ IDEA-Verknüpfungen, WebStorm-Verknüpfungen, PyCharm-Verknüpfungen, Programmierertools, IDE-Verknüpfungen, Editor-Verknüpfungen, Entwicklungseffizienz"
   },
   "toolGrid": {
     "myFavorites": "Meine Favoriten",
@@ -121,24 +150,30 @@
     "updated": "Aktualisiert",
     "hotRecommendations": "Beliebte Empfehlungen",
     "hot": "Beliebt",
-    "shortcuts": "{{count}} Tastenkürzel",
+    "shortcuts": "{{count}} Verknüpfungen",
     "updatedOn": "Aktualisiert am {{date}}",
-    "noFavoriteTools": "Noch keine Lieblings-Tools",
+    "noFavoriteTools": "Noch keine favorisierten Tools",
     "noTools": "Keine Tools verfügbar",
-    "clickHeartToFavorite": "Klicken Sie auf das Herz-Symbol auf Tool-Karten, um Tools zu favorisieren",
-    "noCategoryTools": "Noch keine Tools in dieser Kategorie"
+    "clickHeartToFavorite": "Klicken Sie auf das Herzsymbol auf den Tool-Karten, um Tools zu favorisieren",
+    "noCategoryTools": "Keine Tools in dieser Kategorie verfügbar",
+    "items": "Elemente"
   },
   "toolDetail": {
     "allPlatforms": "Alle Plattformen",
     "macOSOnly": "Nur macOS",
     "detected": "Erkannt",
-    "searchShortcuts": "Tastenkürzel suchen...",
+    "searchShortcuts": "Verknüpfungen suchen...",
     "allCategories": "Alle Kategorien",
-    "showing": "Zeige {{filtered}} / {{total}} Tastenkürzel",
+    "showing": "Zeige {{filtered}} / {{total}} Verknüpfungen",
     "keyboardHeatmap": "Tastatur-Heatmap",
-    "shortcutList": "Tastenkürzel-Liste",
+    "shortcutList": "Verknüpfungsliste",
     "interactiveKeyboardHeatmap": "Interaktive Tastatur-Heatmap",
-    "heatmapDescription": "Klicken Sie auf Tastaturtasten, um entsprechende Tastenkürzel anzuzeigen. Die Farbtiefe zeigt die Nutzungshäufigkeit an"
+    "heatmapDescription": "Klicken Sie auf Tastaturtasten, um die entsprechenden Verknüpfungen anzuzeigen. Die Farbintensität zeigt die Nutzungshäufigkeit an",
+    "platforms": {
+      "win": "Windows",
+      "mac": "macOS",
+      "linux": "Linux"
+    }
   },
   "keyboardHeatmap": {
     "usageFrequency": "Nutzungshäufigkeit",
@@ -147,53 +182,57 @@
     "medium": "Mittel",
     "high": "Hoch",
     "veryHigh": "Sehr hoch",
-    "relatedShortcuts": "Verwandte Tastenkürzel",
-    "noShortcuts": "Keine Tastenkürzel",
-    "moreShortcuts": "{{count}} weitere Tastenkürzel..."
+    "relatedShortcuts": "Verwandte Verknüpfungen",
+    "noShortcuts": "Keine Verknüpfungen",
+    "moreShortcuts": "{{count}} weitere Verknüpfungen...",
+    "items": "Elemente"
   },
   "shortcutList": {
-    "totalShortcuts": "{{count}} Tastenkürzel in {{categories}} Kategorien",
+    "totalShortcuts": "Insgesamt {{count}} Verknüpfungen in {{categories}} Kategorien",
     "byCategory": "Nach Kategorie",
     "byDescription": "Nach Beschreibung",
     "allPlatforms": "Alle Plattformen",
-    "noShortcutsFound": "Keine Tastenkürzel gefunden",
-    "adjustFilters": "Versuchen Sie, Suchkriterien oder Filteroptionen anzupassen"
+    "noShortcutsFound": "Keine Verknüpfungen gefunden",
+    "adjustFilters": "Versuchen Sie, die Suchkriterien oder Filteroptionen anzupassen",
+    "items": "Elemente"
   },
   "searchResults": {
     "searchResults": "Suchergebnisse",
     "foundResults": "{{count}} Ergebnisse für \"{{query}}\" gefunden",
     "clearSearch": "Suche löschen",
     "tools": "Tools",
-    "shortcuts": "Tastenkürzel",
-    "noResultsFound": "Keine Ergebnisse gefunden",
-    "tryDifferentKeywords": "Versuchen Sie andere Schlüsselwörter oder überprüfen Sie die Rechtschreibung",
-    "backToBrowse": "Zurück zum Durchsuchen der Tools"
+    "shortcuts": "Verknüpfungen",
+    "noResultsFound": "Keine verwandten Ergebnisse gefunden",
+    "tryDifferentKeywords": "Versuchen Sie es mit anderen Schlüsselwörtern oder überprüfen Sie die Rechtschreibung",
+    "backToBrowse": "Zurück zur Tool-Übersicht",
+    "items": "Elemente",
+    "allPlatforms": "Alle Plattformen"
   },
   "toolDescriptions": {
-    "vscode": "Microsofts leichtgewichtiger Code-Editor mit Unterstützung für mehrere Programmiersprachen und reichem Plugin-Ökosystem.",
-    "sublime": "Hochleistungs-Texteditor, bekannt für seine schnelle Reaktion und mächtigen Multi-Cursor-Bearbeitungsfunktionen.",
-    "intellij-java": "JetBrains' Java-IDE mit mächtigen Code-Analyse-, Refactoring- und Debugging-Funktionen, das bevorzugte Tool für Java-Entwicklung.",
-    "eclipse": "Open-Source-Entwicklungsumgebung, hauptsächlich für Java-Entwicklung verwendet, unterstützt mehrere Programmiersprachen.",
-    "android-studio": "Googles offizielle Android-App-Entwicklungs-IDE, basierend auf IntelliJ IDEA.",
-    "xcode": "Apples offizielle IDE für iOS- und macOS-App-Entwicklung, läuft nur auf macOS.",
-    "hbuilderx": "Professionelle Frontend-IDE von DCloud entwickelt, optimiert für uni-app und 5+App-Entwicklung.",
-    "webstorm": "JetBrains' professionelle Web-Frontend-IDE mit mächtiger Unterstützung für JavaScript und verwandte Technologien.",
-    "goland": "JetBrains' Go-Sprach-IDE mit intelligenter Code-Unterstützung, Debugging- und Test-Tools für Go-Entwicklung.",
-    "pycharm": "JetBrains' Python-IDE mit intelligenter Code-Vervollständigung, Inspektion, Debugging und Refactoring-Funktionen.",
-    "clion": "JetBrains' C/C++-Entwicklungsumgebung mit intelligenter Code-Unterstützung und mächtigen Debugging-Funktionen.",
-    "atom": "Open-Source-Texteditor von GitHub entwickelt, hochgradig anpassbar, obwohl eingestellt, aber immer noch viele Benutzer.",
-    "photoshop": "Adobes professionelle Bildbearbeitungssoftware, der Industriestandard für digitale Bildverarbeitung.",
-    "figma": "Modernes kollaboratives UI-Design-Tool mit Unterstützung für Echtzeit-Zusammenarbeit und Prototyping.",
-    "chrome-devtools": "Eingebaute Entwicklertools im Google Chrome Browser für Web-Debugging und Leistungsanalyse.",
-    "firefox-devtools": "Eingebaute Entwicklertools im Mozilla Firefox Browser mit mächtigen Web-Debugging- und Analysefunktionen."
+    "vscode": "Ein leichtgewichtiger Code-Editor von Microsoft, der mehrere Programmiersprachen und ein umfangreiches Plugin-Ökosystem unterstützt.",
+    "sublime": "Ein leistungsstarker Texteditor, bekannt für seine schnelle Reaktionszeit und leistungsstarke Multi-Cursor-Bearbeitungsfunktionen.",
+    "intellij-java": "Eine Java-IDE von JetBrains, die leistungsstarke Code-Analyse, Refactoring- und Debugging-Funktionen bietet. Sie ist das bevorzugte Tool für die Java-Entwicklung.",
+    "eclipse": "Eine Open-Source-Entwicklungsumgebung, hauptsächlich für die Java-Entwicklung verwendet und unterstützt mehrere Programmiersprachen.",
+    "android-studio": "Die offizielle Android-App-Entwicklungs-IDE von Google, basierend auf IntelliJ IDEA.",
+    "xcode": "Die offizielle iOS- und macOS-App-Entwicklungs-IDE von Apple, läuft nur auf macOS.",
+    "hbuilderx": "Eine professionelle Front-End-IDE von DCloud, optimiert für die Entwicklung mit uni-app und 5+App.",
+    "webstorm": "Eine professionelle Web-Front-End-IDE von JetBrains, die starke Unterstützung für JavaScript und verwandte Technologien bietet.",
+    "goland": "Eine Go-Sprach-IDE von JetBrains, die intelligente Code-Unterstützung, Debugging- und Testwerkzeuge für die Go-Entwicklung bietet.",
+    "pycharm": "Eine Python-IDE von JetBrains, die intelligente Code-Vervollständigung, Prüfung, Debugging und Refactoring-Funktionen bietet.",
+    "clion": "Eine C/C++-Entwicklungsumgebung von JetBrains, die intelligente Code-Unterstützung und leistungsstarke Debugging-Funktionen bietet.",
+    "atom": "Ein Open-Source-Texteditor von GitHub, hochgradig anpassbar. Obwohl nicht mehr aktualisiert, hat er immer noch eine große Nutzerbasis.",
+    "photoshop": "Adobe's professionelle Bildbearbeitungssoftware, der Branchenstandard für die digitale Bildverarbeitung.",
+    "figma": "Ein modernes kollaboratives UI-Design-Tool, das Echtzeit-Zusammenarbeit und Prototyping unterstützt.",
+    "chrome-devtools": "Entwicklertools, die im Google Chrome-Browser integriert sind, für Web-Debugging und Leistungsanalyse.",
+    "firefox-devtools": "Entwicklertools, die im Mozilla Firefox-Browser integriert sind, bieten leistungsstarke Web-Debugging- und Analysefunktionen."
   },
   "shortcutCategories": {
     "general": "Allgemein",
     "file": "Datei",
     "navigation": "Navigation",
-    "editing": "Bearbeitung",
+    "editing": "Bearbeiten",
     "search": "Suchen & Ersetzen",
-    "debugging": "Debugging",
+    "debugging": "Debuggen",
     "refactoring": "Refactoring",
     "version_control": "Versionskontrolle",
     "view": "Ansicht",
@@ -212,10 +251,10 @@
     "close": "Schließen",
     "close_all": "Alle schließen",
     "reopen_closed": "Geschlossenen Editor wieder öffnen",
-    "keep_preview": "Vorschaumodus-Editor offen halten",
-    "next_tab": "Nächsten öffnen",
-    "prev_tab": "Vorherigen öffnen",
-    "copy_path": "Aktiven Dateipfad kopieren",
+    "keep_preview": "Vorschau-Modus-Editor geöffnet lassen",
+    "next_tab": "Nächstes öffnen",
+    "prev_tab": "Vorheriges öffnen",
+    "copy_path": "Pfad der aktiven Datei kopieren",
     "reveal_in_explorer": "Aktive Datei im Explorer anzeigen",
     "show_in_new_window": "Aktive Datei in neuem Fenster/Instanz anzeigen"
   }

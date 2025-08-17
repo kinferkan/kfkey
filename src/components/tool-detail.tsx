@@ -10,6 +10,7 @@ import { KeyboardHeatmap } from '@/components/keyboard-heatmap'
 import { ShortcutList } from '@/components/shortcut-list'
 import { Tool, Platform } from '@/types'
 import { useTranslation } from 'react-i18next'
+import { i18nTools } from '@/utils/i18n-tools'
 
 // 检测用户操作系统
 const detectUserPlatform = (): Platform => {
@@ -31,11 +32,11 @@ const detectUserPlatform = (): Platform => {
 // 获取平台显示名称
 const getPlatformDisplayName = (platform: Platform, t: any): string => {
   switch (platform) {
-    case 'mac': return 'macOS'
-    case 'win': return 'Windows'
-    case 'linux': return 'Linux'
+    case 'mac': return t('toolDetail.platforms.mac')
+    case 'win': return t('toolDetail.platforms.win')
+    case 'linux': return t('toolDetail.platforms.linux')
     case 'all': return t('toolDetail.allPlatforms')
-    default: return 'Windows'
+    default: return t('toolDetail.platforms.win')
   }
 }
 
@@ -100,14 +101,14 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold">{tool.name}</h1>
-                  <p className="text-muted-foreground">{tool.description}</p>
+                  <p className="text-muted-foreground">{i18nTools.getToolDescription(t, tool.id, tool.description)}</p>
                 </div>
               </div>
             </div>
             
             <div className="flex items-center space-x-2">
               <Badge variant="secondary">
-                {tool.shortcuts.length} 个快捷键
+                {t('toolGrid.shortcuts', { count: tool.shortcuts.length })}
               </Badge>
               <Button variant="outline" size="icon">
                 <Share2 className="w-4 h-4" />
@@ -150,9 +151,9 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">{t('toolDetail.allPlatforms')}</SelectItem>
-                <SelectItem value="win">Windows</SelectItem>
-                <SelectItem value="mac">macOS</SelectItem>
-                <SelectItem value="linux">Linux</SelectItem>
+                <SelectItem value="win">{t('toolDetail.platforms.win')}</SelectItem>
+                <SelectItem value="mac">{t('toolDetail.platforms.mac')}</SelectItem>
+                <SelectItem value="linux">{t('toolDetail.platforms.linux')}</SelectItem>
               </SelectContent>
             </Select>
             {tool.id === 'xcode' && (
