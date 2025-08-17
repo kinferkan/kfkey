@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Search, Menu, Heart, Settings, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -23,6 +23,9 @@ export function MainLayout() {
   const [showFavorites, setShowFavorites] = useState(false)
   const [refreshKey, setRefreshKey] = useState(0)
   const [showSettings, setShowSettings] = useState(false)
+  const settingsButtonRef = useRef<HTMLButtonElement>(null)
+  const settingsPanelRef = useRef<HTMLDivElement>(null)
+  const [settingsPosition, setSettingsPosition] = useState({ top: 0, right: 0 })
 
   // 强制刷新函数，用于收藏状态变化时更新所有组件
   const forceRefresh = () => {
@@ -42,6 +45,47 @@ export function MainLayout() {
     setSelectedTool(null)
   }
   
+  // 计算设置面板位置
+  useEffect(() => {
+    if (showSettings && settingsButtonRef.current) {
+      const buttonRect = settingsButtonRef.current.getBoundingClientRect()
+      const containerRect = settingsButtonRef.current.closest('.container')?.getBoundingClientRect()
+      
+      if (containerRect) {
+        setSettingsPosition({
+          top: buttonRect.bottom - containerRect.top + 8, // 8px 间距
+          right: containerRect.right - buttonRect.right
+        })
+      }
+    }
+  }, [showSettings])
+
+  // 点击外部区域关闭设置面板
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showSettings &&
+        settingsPanelRef.current &&
+        !settingsPanelRef.current.contains(event.target as Node) &&
+        settingsButtonRef.current &&
+        !settingsButtonRef.current.contains(event.target as Node)
+      ) {
+        // 检查点击是否在语言选择器的下拉菜单中
+        const selectContent = document.querySelector('[role="listbox"]');
+        if (selectContent && selectContent.contains(event.target as Node)) {
+          return; // 如果点击在下拉菜单中，不关闭设置面板
+        }
+        
+        setShowSettings(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showSettings]);
+
   // 添加键盘快捷键监听
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -136,6 +180,7 @@ export function MainLayout() {
               variant="ghost"
               size="icon"
               onClick={() => setShowSettings(!showSettings)}
+              ref={settingsButtonRef}
             >
               <Settings className="h-5 w-5" />
             </Button>
@@ -143,7 +188,14 @@ export function MainLayout() {
           
           {/* 设置面板 */}
           {showSettings && (
-            <div className="absolute top-12 right-0 bg-background border border-border rounded-lg shadow-lg p-4 w-64 z-50">
+            <div 
+              ref={settingsPanelRef}
+              className="absolute bg-background border border-border rounded-lg shadow-lg p-4 w-64 z-50"
+              style={{
+                top: `${settingsPosition.top}px`,
+                right: `${settingsPosition.right}px`
+              }}
+            >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold">{t('common.settings')}</h3>
