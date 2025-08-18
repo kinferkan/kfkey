@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ArrowLeft, Heart, Share2, Download, Filter, Search, Monitor } from 'lucide-react'
+import { ArrowLeft, Heart, Share2, Download, Filter, Search, Monitor, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -85,6 +85,13 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
 
   const categories = Array.from(new Set(tool.shortcuts.map(s => s.category)))
 
+  // 处理导航到独立页面
+  const handleNavigateToPage = () => {
+    if (tool.id === 'vscode' || tool.id === 'sublime' || tool.id === 'intellij-java' || tool.id === 'eclipse' || tool.id === 'webstorm' || tool.id === 'pycharm' || tool.id === 'goland' || tool.id === 'clion' || tool.id === 'android-studio' || tool.id === 'xcode' || tool.id === 'hbuilderx' || tool.id === 'atom' || tool.id === 'photoshop' || tool.id === 'figma' || tool.id === 'chrome-devtools' || tool.id === 'firefox-devtools') {
+      window.open(`/tools/${tool.id}`, '_blank')
+    }
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* 工具头部信息 */}
@@ -100,7 +107,20 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
                   <img src={tool.icon} alt={tool.name} className="w-8 h-8 object-contain" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold">{tool.name}</h1>
+                  <div className="flex items-center space-x-2">
+                    <h1 className="text-2xl font-bold">{tool.name}</h1>
+                    {(tool.id === 'vscode' || tool.id === 'sublime' || tool.id === 'intellij-java' || tool.id === 'eclipse' || tool.id === 'webstorm' || tool.id === 'pycharm' || tool.id === 'goland' || tool.id === 'clion' || tool.id === 'android-studio' || tool.id === 'xcode' || tool.id === 'hbuilderx' || tool.id === 'atom' || tool.id === 'photoshop' || tool.id === 'figma' || tool.id === 'chrome-devtools' || tool.id === 'firefox-devtools') && (
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="h-6 px-2 text-xs"
+                        onClick={handleNavigateToPage}
+                      >
+                        {t('toolDetail.toolIntroduction')}
+                        <ExternalLink className="w-3 h-3 ml-1" />
+                      </Button>
+                    )}
+                  </div>
                   <p className="text-muted-foreground">{i18nTools.getToolDescription(t, tool.id, tool.description)}</p>
                 </div>
               </div>
