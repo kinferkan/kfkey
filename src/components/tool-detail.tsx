@@ -11,6 +11,7 @@ import { ShortcutList } from '@/components/shortcut-list'
 import { Tool, Platform } from '@/types'
 import { useTranslation } from 'react-i18next'
 import { i18nTools } from '@/utils/i18n-tools'
+import { useNavigate } from 'react-router-dom'
 
 // 检测用户操作系统
 const detectUserPlatform = (): Platform => {
@@ -47,6 +48,7 @@ interface ToolDetailProps {
 
 export function ToolDetail({ tool, onBack }: ToolDetailProps) {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [detectedPlatform, setDetectedPlatform] = useState<Platform>('win')
   // 智能平台选择：Xcode强制macOS，其他工具使用检测到的系统
@@ -135,12 +137,6 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
               </Button>
               <Button variant="outline" size="icon">
                 <Download className="w-4 h-4" />
-              </Button>
-              <Button 
-                variant={tool.isFavorite ? "default" : "outline"}
-                size="icon"
-              >
-                <Heart className={`w-4 h-4 ${tool.isFavorite ? 'fill-current' : ''}`} />
               </Button>
             </div>
           </div>

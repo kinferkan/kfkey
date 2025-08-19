@@ -1,11 +1,12 @@
-import { useState } from 'react'
-import { ChevronDown, ChevronRight, Code, Palette, Terminal, Heart, Star } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { ChevronDown, ChevronRight, Code, Palette, Terminal, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { toolsData, favoriteService } from '@/data/tools'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
+import { ToolCategory } from '@/types'
 
 interface SidebarProps {
   selectedCategory: string
@@ -13,6 +14,7 @@ interface SidebarProps {
   showFavorites: boolean
   onToggleFavorites: (show: boolean) => void
   onToolSelect?: (toolId: string) => void
+  currentToolId?: string
 }
 
 const categoryIcons = {
@@ -21,10 +23,23 @@ const categoryIcons = {
   'browser-tools': Terminal,
 }
 
-export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onToggleFavorites, onToolSelect }: SidebarProps) {
+export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onToggleFavorites, onToolSelect, currentToolId }: SidebarProps) {
   const { t } = useTranslation()
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['ide'])
   const favoriteTools = favoriteService.getFavoriteTools()
+
+  // 当currentToolId变化时，自动展开对应的分类
+  useEffect(() => {
+    if (currentToolId) {
+      const toolCategory = toolsData.find((category: ToolCategory) => 
+        category.tools.some(tool => tool.id === currentToolId)
+      )
+      
+      if (toolCategory && !expandedCategories.includes(toolCategory.id)) {
+        setExpandedCategories(prev => [...prev, toolCategory.id])
+      }
+    }
+  }, [currentToolId])
 
   const toggleCategory = (categoryId: string) => {
     setExpandedCategories(prev => 
@@ -51,26 +66,11 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
             {favoriteTools.length}
           </Badge>
         </Button>
-
-        <Button
-          variant={selectedCategory === 'all' && !showFavorites ? "default" : "ghost"}
-          className="w-full justify-start"
-          onClick={() => {
-            onCategorySelect('all')
-            onToggleFavorites(false)
-          }}
-        >
-          <Star className="mr-2 h-4 w-4" />
-          {t('navigation.allTools')}
-          <Badge variant="secondary" className="ml-auto">
-            {toolsData.reduce((acc, cat) => acc + cat.tools.length, 0)}
-          </Badge>
-        </Button>
       </div>
 
       <ScrollArea className="flex-1 px-4">
         <div className="space-y-2 py-4">
-          {toolsData.map((category) => {
+          {toolsData.map((category: ToolCategory) => {
             const Icon = categoryIcons[category.id as keyof typeof categoryIcons] || Code
             const isExpanded = expandedCategories.includes(category.id)
             const isSelected = selectedCategory === category.id
@@ -94,7 +94,7 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
                     <ChevronRight className="mr-2 h-4 w-4" />
                   )}
                   <Icon className="mr-2 h-4 w-4" />
-                  {t(category.name)}
+                  {t(category.name)} {/* 确保分类名称正确显示 */}
                   <Badge variant="secondary" className="ml-auto">
                     {category.tools.length}
                   </Badge>
@@ -109,6 +109,7 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
                         size="sm"
                         className={cn(
                           "w-full justify-start text-sm",
+                          currentToolId === tool.id && "bg-accent text-accent-foreground",
                           tool.isFavorite && "text-red-500"
                         )}
                         onClick={() => onToolSelect?.(tool.id)}

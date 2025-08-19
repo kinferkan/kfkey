@@ -1,0 +1,212 @@
+import { useState, useEffect, useRef } from 'react'
+import { Search, Heart, Settings, X } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { useTheme } from '@/components/theme-provider'
+import { LanguageSwitcher } from '@/components/language-switcher'
+import { Badge } from '@/components/ui/badge'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+
+interface TopNavbarProps {
+  showFavorites: boolean
+  onToggleFavorites: () => void
+  searchQuery: string
+  onSearchChange: (query: string) => void
+  showSettingsButton?: boolean
+}
+
+export function TopNavbar({ 
+  showFavorites, 
+  onToggleFavorites, 
+  searchQuery, 
+  onSearchChange,
+  showSettingsButton = true
+}: TopNavbarProps) {
+  const { theme, setTheme } = useTheme()
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const [showSettings, setShowSettings] = useState(false)
+  const settingsButtonRef = useRef<HTMLButtonElement>(null)
+  const settingsPanelRef = useRef<HTMLDivElement>(null)
+  const [settingsPosition, setSettingsPosition] = useState({ top: 0, right: 0 })
+
+  // 计算设置面板位置
+  useEffect(() => {
+    if (showSettings && settingsButtonRef.current) {
+      const buttonRect = settingsButtonRef.current.getBoundingClientRect()
+      const containerRect = settingsButtonRef.current.closest('.container')?.getBoundingClientRect()
+      
+      if (containerRect) {
+        setSettingsPosition({
+          top: buttonRect.bottom - containerRect.top + 8, // 8px 间距
+          right: containerRect.right - buttonRect.right
+        })
+      }
+    }
+  }, [showSettings])
+
+  // 点击外部区域关闭设置面板
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showSettings &&
+        settingsPanelRef.current &&
+        !settingsPanelRef.current.contains(event.target as Node) &&
+        settingsButtonRef.current &&
+        !settingsButtonRef.current.contains(event.target as Node)
+      ) {
+        // 检查点击是否在语言选择器的下拉菜单中
+        const selectContent = document.querySelector('[role="listbox"]');
+        if (selectContent && selectContent.contains(event.target as Node)) {
+          return; // 如果点击在下拉菜单中，不关闭设置面板
+        }
+        
+        setShowSettings(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showSettings]);
+
+  // 添加键盘快捷键监听
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // 检测 Ctrl+K 组合键
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault() // 阻止默认行为
+        
+        // 聚焦搜索框
+        const searchInput = document.querySelector('input[type="text"]') as HTMLInputElement
+        if (searchInput) {
+          searchInput.focus()
+        }
+      }
+    }
+    
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
+
+  // 处理Logo点击回到主页
+  const handleLogoClick = () => {
+    navigate('/')
+  }
+
+  return (
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center px-4 relative">
+        {/* Logo */}
+        <div 
+          className="flex items-center space-x-2 cursor-pointer"
+          onClick={handleLogoClick}
+        >
+          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-sm">K</span>
+          </div>
+          <span className="font-bold text-xl">KeyFlow</span>
+        </div>
+
+        {/* 搜索框 */}
+        <div className="flex-1 max-w-md mx-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder={t('common.searchPlaceholder')}
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  onSearchChange('')
+                }
+              }}
+              className="pl-10 pr-16"
+            />
+            <Badge variant="secondary" className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs">
+              Ctrl+K
+            </Badge>
+          </div>
+        </div>
+
+        {/* 右侧按钮组 */}
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onToggleFavorites}
+            className={showFavorites ? 'text-red-500' : ''}
+          >
+            <Heart className={`h-5 w-5 ${showFavorites ? 'fill-current' : ''}`} />
+          </Button>
+          
+          {showSettingsButton && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowSettings(!showSettings)}
+              ref={settingsButtonRef}
+            >
+              <Settings className="h-5 w-5" />
+            </Button>
+          )}
+        </div>
+        
+        {/* 设置面板 */}
+        {showSettingsButton && showSettings && (
+          <div 
+            ref={settingsPanelRef}
+            className="absolute bg-background border border-border rounded-lg shadow-lg p-4 w-64 z-50"
+            style={{
+              top: `${settingsPosition.top}px`,
+              right: `${settingsPosition.right}px`
+            }}
+          >
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">{t('common.settings')}</h3>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowSettings(false)}
+                  className="h-6 w-6"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">{t('common.theme')}</span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                    className="h-8 px-3"
+                  >
+                    {theme === 'dark' ? t('common.light') : t('common.dark')}
+                  </Button>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">{t('common.language')}</span>
+                  <LanguageSwitcher />
+                </div>
+                
+                <div className="pt-2 border-t border-border">
+                  <div className="text-xs text-muted-foreground text-center">
+                    KeyFlow v1.0.0
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
+  )
+}

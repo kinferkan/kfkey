@@ -5,19 +5,19 @@ import { Input } from '@/components/ui/input'
 import { useTheme } from '@/components/theme-provider'
 import { Sidebar } from '@/components/sidebar'
 import { ToolGrid } from '@/components/tool-grid'
-import { ToolDetail } from '@/components/tool-detail'
 import { SearchResults } from '@/components/search-results'
 import { LanguageSwitcher } from '@/components/language-switcher'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Badge } from '@/components/ui/badge'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Tool } from '@/types'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { Tool } from '@/types'
+import { toolsData } from '@/data/tools'
 
 export function MainLayout() {
   const { theme, setTheme } = useTheme()
   const { t } = useTranslation()
-  const [selectedTool, setSelectedTool] = useState<Tool | null>(null)
+  const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [showFavorites, setShowFavorites] = useState(false)
@@ -33,16 +33,19 @@ export function MainLayout() {
   }
 
   const handleToolSelect = (tool: Tool) => {
-    setSelectedTool(tool)
+    // 使用路由导航到工具详情页
+    navigate(`/tool/${tool.id}`)
   }
 
-  const handleBackToGrid = () => {
-    setSelectedTool(null)
+  // 处理侧边栏工具选择
+  const handleSidebarToolSelect = (toolId: string) => {
+    // 根据toolId找到对应的工具对象
+    const tool = toolsData.flatMap(cat => cat.tools).find(t => t.id === toolId)
+    if (tool) handleToolSelect(tool)
   }
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
-    setSelectedTool(null)
   }
   
   // 计算设置面板位置
@@ -125,13 +128,7 @@ export function MainLayout() {
                 onCategorySelect={setSelectedCategory}
                 showFavorites={showFavorites}
                 onToggleFavorites={setShowFavorites}
-                onToolSelect={(toolId) => {
-                  // 根据toolId找到对应的工具对象
-                  import('@/data/tools').then(({ toolsData }) => {
-                    const tool = toolsData.flatMap(cat => cat.tools).find(t => t.id === toolId)
-                    if (tool) handleToolSelect(tool)
-                  })
-                }}
+                onToolSelect={handleSidebarToolSelect}
               />
             </SheetContent>
           </Sheet>
@@ -247,21 +244,13 @@ export function MainLayout() {
             onCategorySelect={setSelectedCategory}
             showFavorites={showFavorites}
             onToggleFavorites={setShowFavorites}
-            onToolSelect={(toolId) => {
-              // 根据toolId找到对应的工具对象
-              import('@/data/tools').then(({ toolsData }) => {
-                const tool = toolsData.flatMap(cat => cat.tools).find(t => t.id === toolId)
-                if (tool) handleToolSelect(tool)
-              })
-            }}
+            onToolSelect={handleSidebarToolSelect}
           />
         </aside>
 
         {/* 主内容区 */}
         <main className="flex-1 overflow-hidden">
-          {selectedTool ? (
-            <ToolDetail tool={selectedTool} onBack={handleBackToGrid} />
-          ) : searchQuery ? (
+          {searchQuery ? (
             <SearchResults 
               query={searchQuery} 
               onToolSelect={handleToolSelect}

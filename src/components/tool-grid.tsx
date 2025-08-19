@@ -63,7 +63,7 @@ export function ToolGrid({ selectedCategory, showFavorites, onToolSelect, onFavo
         <div>
           <h1 className="text-2xl font-bold">
             {showFavorites ? t('toolGrid.myFavorites') : selectedCategory === 'all' ? t('toolGrid.allTools') : 
-             toolsData.find(cat => cat.id === selectedCategory)?.name || t('toolGrid.tools')}
+             t(toolsData.find(cat => cat.id === selectedCategory)?.name || 'toolGrid.tools')}
           </h1>
           <p className="text-muted-foreground mt-1">
             {t('toolGrid.foundTools', { count: tools.length })}
