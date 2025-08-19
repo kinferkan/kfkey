@@ -6,11 +6,12 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { toolsData, favoriteService } from '@/data/tools'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { ToolCategory } from '@/types'
 
 interface SidebarProps {
   selectedCategory: string
-  onCategorySelect: (category: string) => void
+  onCategorySelect?: (category: string) => void
   showFavorites: boolean
   onToggleFavorites: (show: boolean) => void
   onToolSelect?: (toolId: string) => void
@@ -25,6 +26,7 @@ const categoryIcons = {
 
 export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onToggleFavorites, onToolSelect, currentToolId }: SidebarProps) {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['ide'])
   const favoriteTools = favoriteService.getFavoriteTools()
 
@@ -40,6 +42,13 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
       }
     }
   }, [currentToolId])
+
+  // 当selectedCategory变化时，自动展开对应的分类
+  useEffect(() => {
+    if (selectedCategory && selectedCategory !== 'all' && !expandedCategories.includes(selectedCategory)) {
+      setExpandedCategories(prev => [...prev, selectedCategory])
+    }
+  }, [selectedCategory])
 
   const toggleCategory = (categoryId: string) => {
     setExpandedCategories(prev => 
@@ -81,11 +90,14 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
                   variant={isSelected && !showFavorites ? "default" : "ghost"}
                   className="w-full justify-start"
                   onClick={() => {
-                    onCategorySelect(category.id)
-                    onToggleFavorites(false)
-                    if (!isExpanded) {
-                      toggleCategory(category.id)
+                    // 切换分类展开状态
+                    toggleCategory(category.id)
+                    // 如果有onCategorySelect回调，则调用它（用于非独立页面场景）
+                    if (onCategorySelect) {
+                      onCategorySelect(category.id)
                     }
+                    // 导航到独立的分类页面
+                    navigate(`/category/${category.id}`)
                   }}
                 >
                   {isExpanded ? (

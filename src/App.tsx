@@ -19,6 +19,7 @@ import { FigmaPage } from '@/components/figma-page'
 import { ChromeDevtoolsPage } from '@/components/chrome-devtools-page'
 import { FirefoxDevtoolsPage } from '@/components/firefox-devtools-page'
 import { ToolDetailPage } from './components/tool-detail-page'
+import { CategoryPage } from './components/category-page'
 import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { TopNavbar } from '@/components/top-navbar'
@@ -64,10 +65,6 @@ function ToolDetailWrapper() {
         onToggleFavorites={() => setShowFavorites(!showFavorites)}
         searchQuery={searchQuery}
         onSearchChange={handleSearch}
-        selectedCategory={selectedCategory}
-        onCategorySelect={setSelectedCategory}
-        onToggleFavoritesSidebar={setShowFavorites}
-        onToolSelect={handleSidebarToolSelect}
       />
       <div className="flex flex-1">
         <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -120,10 +117,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -153,10 +146,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -186,10 +175,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -219,10 +204,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -252,10 +233,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -285,10 +262,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -318,10 +291,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -351,10 +320,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -384,10 +349,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -417,10 +378,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -450,10 +407,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -483,10 +436,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -516,10 +465,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -549,10 +494,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -582,10 +523,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -615,10 +552,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -647,6 +580,15 @@ function App() {
             </ThemeProvider>
           </HelmetProvider>
         } />
+        
+        {/* 分类页面路由 */}
+        <Route path="/category/:categoryId" element={
+          <HelmetProvider>
+            <ThemeProvider defaultTheme="light" storageKey="keyflow-ui-theme">
+              <CategoryPage />
+            </ThemeProvider>
+          </HelmetProvider>
+        } />
         {/* 主页路由 */}
         <Route path="/" element={
           <HelmetProvider>
@@ -657,10 +599,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
@@ -702,10 +640,6 @@ function App() {
                   onToggleFavorites={() => setShowFavorites(!showFavorites)}
                   searchQuery={searchQuery}
                   onSearchChange={handleSearch}
-                  selectedCategory={selectedCategory}
-                  onCategorySelect={setSelectedCategory}
-                  onToggleFavoritesSidebar={setShowFavorites}
-                  onToolSelect={handleSidebarToolSelect}
                 />
                 <div className="flex flex-1">
                   <div className="hidden md:block w-80 border-r bg-muted/10">
