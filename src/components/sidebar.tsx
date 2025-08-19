@@ -28,7 +28,7 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['ide'])
-  const favoriteTools = favoriteService.getFavoriteTools()
+  const [favoriteCount, setFavoriteCount] = useState(0)
 
   // 当currentToolId变化时，自动展开对应的分类
   useEffect(() => {
@@ -49,6 +49,26 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
       setExpandedCategories(prev => [...prev, selectedCategory])
     }
   }, [selectedCategory])
+
+  // 监听收藏变更事件并更新收藏数量
+  useEffect(() => {
+    const updateFavoriteCount = () => {
+      setFavoriteCount(favoriteService.getFavoriteTools().length)
+    }
+    
+    // 初始化收藏数量
+    updateFavoriteCount()
+    
+    // 监听自定义事件以更新收藏夹数量
+    const handleFavoritesChange = () => {
+      updateFavoriteCount()
+    }
+    
+    window.addEventListener('favoritesChange', handleFavoritesChange)
+    return () => {
+      window.removeEventListener('favoritesChange', handleFavoritesChange)
+    }
+  }, [])
 
   const toggleCategory = (categoryId: string) => {
     setExpandedCategories(prev => 
@@ -72,7 +92,7 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
           <Heart className={`mr-2 h-4 w-4 ${showFavorites ? 'fill-current' : ''}`} />
           {t('common.favorites')}
           <Badge variant="secondary" className="ml-auto">
-            {favoriteTools.length}
+            {favoriteCount}
           </Badge>
         </Button>
       </div>

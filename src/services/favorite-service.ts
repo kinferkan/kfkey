@@ -91,6 +91,9 @@ export class FavoriteService {
           tool.isFavorite = true
         }
         
+        // 触发自定义事件通知其他组件更新收藏数量
+        window.dispatchEvent(new CustomEvent('favoritesChange'))
+        
         return true
       }
       return false
@@ -120,6 +123,9 @@ export class FavoriteService {
           tool.isFavorite = false
         }
         
+        // 触发自定义事件通知其他组件更新收藏数量
+        window.dispatchEvent(new CustomEvent('favoritesChange'))
+        
         return true
       }
       return false
@@ -139,9 +145,13 @@ export class FavoriteService {
     
     if (isFavorite) {
       this.removeFromFavorites(toolId)
+      // 触发自定义事件通知其他组件更新收藏数量
+      window.dispatchEvent(new CustomEvent('favoritesChange'))
       return false
     } else {
       this.addToFavorites(toolId)
+      // 触发自定义事件通知其他组件更新收藏数量
+      window.dispatchEvent(new CustomEvent('favoritesChange'))
       return true
     }
   }
@@ -158,6 +168,9 @@ export class FavoriteService {
       allTools.forEach(tool => {
         tool.isFavorite = false
       })
+      
+      // 触发自定义事件通知其他组件更新收藏数量
+      window.dispatchEvent(new CustomEvent('favoritesChange'))
     } catch (error) {
       console.error('Failed to clear all favorites:', error)
     }
