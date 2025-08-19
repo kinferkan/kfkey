@@ -134,25 +134,28 @@ export function Sidebar({ selectedCategory, onCategorySelect, showFavorites, onT
 
                 {isExpanded && (
                   <div className="ml-6 space-y-1">
-                    {category.tools.map((tool) => (
-                      <Button
-                        key={tool.id}
-                        variant="ghost"
-                        size="sm"
-                        className={cn(
-                          "w-full justify-start text-sm",
-                          currentToolId === tool.id && "bg-accent text-accent-foreground",
-                          tool.isFavorite && "text-red-500"
-                        )}
-                        onClick={() => onToolSelect?.(tool.id)}
-                      >
-                        <div className="w-4 h-4 rounded bg-muted mr-2" />
-                        {tool.name}
-                        {tool.isFavorite && (
-                          <Heart className="ml-auto h-3 w-3 fill-current" />
-                        )}
-                      </Button>
-                    ))}
+                    {category.tools
+                      .slice()
+                      .sort((a, b) => a.name.localeCompare(b.name))
+                      .map((tool) => (
+                        <Button
+                          key={tool.id}
+                          variant="ghost"
+                          size="sm"
+                          className={cn(
+                            "w-full justify-start text-sm",
+                            currentToolId === tool.id && "bg-accent text-accent-foreground",
+                            tool.isFavorite && "text-red-500"
+                          )}
+                          onClick={() => onToolSelect?.(tool.id)}
+                        >
+                          <div className="w-4 h-4 rounded bg-muted mr-2" />
+                          {tool.name}
+                          {tool.isFavorite && (
+                            <Heart className="ml-auto h-3 w-3 fill-current" />
+                          )}
+                        </Button>
+                      ))}
                   </div>
                 )}
               </div>
