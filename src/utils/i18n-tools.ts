@@ -225,7 +225,26 @@ export function useShortcutDescription(description: string) {
     '转到声明': 'go_to_declaration',
     '转到实现': 'go_to_implementation',
     '在当前文件中替换': 'replace_in_current_file',
-    '在项目中替换': 'replace_in_project'
+    '在项目中替换': 'replace_in_project',
+    // Atom 特有描述
+    '上一个标签页': 'previous_tab',
+    '下一个标签页': 'next_tab',
+    '关闭标签页': 'close_tab',
+    '关闭面板': 'close_panel',
+    '减小字体': 'decrease_font_size',
+    '切换Git面板': 'toggle_git_panel',
+    '切换到右侧面板': 'switch_to_right_panel',
+    '切换开发者工具': 'toggle_developer_tools',
+    '向下分屏': 'split_down',
+    '向右分屏': 'split_right',
+    '在缓冲区中查找': 'find_in_buffer',
+    '展开代码': 'expand_code',
+    '折叠代码': 'fold_code',
+    '暂存文件': 'stage_file',
+    '自动缩进': 'auto_indent',
+    '选择整行': 'select_entire_line',
+    '重新加载窗口': 'reload_window',
+    '重置字体大小': 'reset_font_size'
   }
   
   const key = descriptionMap[description]
@@ -536,7 +555,26 @@ export const i18nTools = {
       '转到声明': 'go_to_declaration',
       '转到实现': 'go_to_implementation',
       '在当前文件中替换': 'replace_in_current_file',
-      '在项目中替换': 'replace_in_project'
+      '在项目中替换': 'replace_in_project',
+      // Atom 特有描述映射
+      '上一个标签页': 'previous_tab',
+      '下一个标签页': 'next_tab',
+      '关闭标签页': 'close_tab',
+      '关闭面板': 'close_panel',
+      '减小字体': 'decrease_font_size',
+      '切换Git面板': 'toggle_git_panel',
+      '切换到右侧面板': 'switch_to_right_panel',
+      '切换开发者工具': 'toggle_developer_tools',
+      '向下分屏': 'split_down',
+      '向右分屏': 'split_right',
+      '在缓冲区中查找': 'find_in_buffer',
+      '展开代码': 'expand_code',
+      '折叠代码': 'fold_code',
+      '暂存文件': 'stage_file',
+      '自动缩进': 'auto_indent',
+      '选择整行': 'select_entire_line',
+      '重新加载窗口': 'reload_window',
+      '重置字体大小': 'reset_font_size'
     }
     
     const key = descriptionMap[description]

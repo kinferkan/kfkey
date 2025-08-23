@@ -13,7 +13,7 @@ import { webstormShortcuts } from './shortcuts/webstorm-shortcuts'
 import { atomShortcuts } from './shortcuts/atom-shortcuts'
 import { chromeDevtoolsShortcuts } from './shortcuts/chrome-devtools-shortcuts'
 import { firefoxDevtoolsShortcuts } from './shortcuts/firefox-devtools-shortcuts'
-import { intellijJavaShortcuts } from './shortcuts/intellij-java-shortcuts'
+import { intellijShortcuts } from './shortcuts/intellij-shortcuts'
 import { golandShortcuts } from './shortcuts/goland-shortcuts'
 import { pycharmShortcuts } from './shortcuts/pycharm-shortcuts'
 import { clionShortcuts } from './shortcuts/clion-shortcuts'
@@ -81,7 +81,7 @@ export const toolsRegistry: ToolCategory[] = [
         name: 'IntelliJ IDEA',
         category: 'categories.ide',
         icon: TOOL_ICONS['intellij-java'],
-        shortcuts: intellijJavaShortcuts,
+        shortcuts: intellijShortcuts,
         popularity: 92,
         lastUpdated: new Date('2024-01-15'),
         description: 'JetBrains开发的Java IDE，提供强大的代码分析、重构和调试功能，是Java开发的首选工具。'
