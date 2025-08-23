@@ -47,7 +47,9 @@ export function useShortcutCategory(category: string) {
     // Figma 分类
     '工具': 'tools',
     // Chrome DevTools 分类
-    '元素面板': 'elements_panel'
+    '元素面板': 'elements_panel',
+    // Android Studio 特有分类
+    'Android开发': 'android_development'
     // Photoshop 使用默认分类映射（文件、编辑）
   }
   
@@ -218,7 +220,12 @@ export function useShortcutDescription(description: string) {
     '切换到元素面板': 'switch_to_elements_panel',
     '切换到源代码面板': 'switch_to_sources_panel',
     '编辑HTML元素': 'edit_html_element',
-    '隐藏元素': 'hide_element'
+    '隐藏元素': 'hide_element',
+    // Android Studio 特有描述
+    '转到声明': 'go_to_declaration',
+    '转到实现': 'go_to_implementation',
+    '在当前文件中替换': 'replace_in_current_file',
+    '在项目中替换': 'replace_in_project'
   }
   
   const key = descriptionMap[description]
@@ -277,7 +284,11 @@ export const i18nTools = {
       // Figma 分类
       '工具': 'tools',
       // Chrome DevTools 分类
-      '元素面板': 'elements_panel'
+      '元素面板': 'elements_panel',
+      // Android Studio 特有分类
+      'Android开发': 'android_development',
+      // Android Studio 其他分类
+      '代码生成': 'code_generation'
       // Photoshop 使用默认分类映射（文件、编辑）
     }
     
@@ -436,7 +447,6 @@ export const i18nTools = {
       '跳转到匹配的括号': 'jump_to_matching_bracket',
       // WebStorm 缺失的描述映射
       '按文件名查找文件': 'find_file_by_name',
-      '最近打开的文件': 'recent_files',
       '代码补全': 'code_completion',
       // Xcode 缺失的描述映射
       '打开': 'open',
@@ -462,7 +472,71 @@ export const i18nTools = {
       '切换到元素面板': 'switch_to_elements_panel',
       '切换到源代码面板': 'switch_to_sources_panel',
       '编辑HTML元素': 'edit_html_element',
-      '隐藏元素': 'hide_element'
+      '隐藏元素': 'hide_element',
+      // Android Studio 特有描述映射
+      '显示意图操作和快速修复': 'show_intention_actions',
+      '打开设置对话框': 'open_settings_dialog',
+      '打开项目结构对话框': 'open_project_structure',
+      'VCS提交': 'vcs_commit',
+      'VCS推送': 'vcs_push',
+      '保存所有文件': 'save_all_files',
+      '关闭当前标签页': 'close_current_tab',
+      '关闭所有标签页': 'close_all_tabs',
+      '重新打开关闭的标签页': 'reopen_closed_tab',
+      '最近编辑的文件': 'recently_edited_files',
+      '打开/关闭项目工具窗口': 'toggle_project_tool_window',
+      '转到父类': 'go_to_super_class',
+      '上一个编辑位置': 'previous_edit_location',
+      '下一个编辑位置': 'next_edit_location',
+      '在打开的文件间切换': 'switch_between_open_files',
+      '扩展选择': 'expand_selection',
+      '收缩选择': 'shrink_selection',
+      '选择当前行': 'select_current_line',
+      '在文件中查找使用': 'find_usages_in_file',
+      '显示使用': 'show_usages',
+      '提取常量': 'extract_constant',
+      '提取参数': 'extract_parameter',
+      '移动': 'move_refactor',
+      '安全删除': 'safe_delete',
+      '调试运行': 'debug_run',
+      '正常运行': 'normal_run',
+      '查看断点': 'view_breakpoints',
+      '恢复程序': 'resume_program',
+      '运行到光标': 'run_to_cursor',
+      '计算表达式': 'evaluate_expression',
+      '生成代码': 'generate_code',
+      '插入实时模板': 'insert_live_template',
+      '环绕代码': 'surround_with',
+      '自动缩进行': 'auto_indent_lines',
+      '构建项目': 'build_project',
+      '重新构建项目': 'rebuild_project',
+      '运行配置选择': 'run_configuration_selection',
+      '调试配置选择': 'debug_configuration_selection',
+      '同步项目与Gradle文件': 'sync_project_with_gradle',
+      '同步': 'synchronize',
+      '最大化编辑器': 'maximize_editor',
+      '项目工具窗口': 'project_tool_window',
+      '收藏夹工具窗口': 'favorites_tool_window',
+      '查找工具窗口': 'find_tool_window',
+      '运行工具窗口': 'run_tool_window',
+      '调试工具窗口': 'debug_tool_window',
+      'TODO工具窗口': 'todo_tool_window',
+      '结构工具窗口': 'structure_tool_window',
+      '版本控制工具窗口': 'version_control_tool_window',
+      '消息工具窗口': 'messages_tool_window',
+      '关闭活动工具窗口': 'close_active_tool_window',
+      '基本代码补全': 'basic_code_completion',
+      '智能代码补全': 'smart_code_completion',
+      '参数信息': 'parameter_info',
+      '快速文档查看': 'quick_documentation',
+      '快速定义查看': 'quick_definition_lookup',
+      '错误描述': 'error_description',
+      // 缺失的Android Studio描述映射
+      '最近打开的文件': 'recent_files',
+      '转到声明': 'go_to_declaration',
+      '转到实现': 'go_to_implementation',
+      '在当前文件中替换': 'replace_in_current_file',
+      '在项目中替换': 'replace_in_project'
     }
     
     const key = descriptionMap[description]
