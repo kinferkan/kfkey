@@ -26,7 +26,29 @@ export function useShortcutCategory(category: string) {
     '多光标': 'multi_cursor',
     '运行': 'run',
     'C/C++特有': 'cpp_specific',
-    '帮助': 'help'
+    '帮助': 'help',
+    '格式化': 'formatting',
+    '注释': 'comment',
+    '代码折叠': 'code_folding',
+    'uni-app': 'uni_app',
+    '智能感知': 'intelligence',
+    '终端': 'terminal',
+    // GoLand 特有分类
+    'Go特有': 'go_specific',
+    // IntelliJ IDEA 特有分类
+    'Java特有': 'java_specific',
+    // Sublime Text 特有分类
+    '选择': 'selection',
+    // WebStorm 特有分类
+    '代码': 'code',
+    // Xcode 特有分类
+    '构建': 'build',
+    '测试': 'testing',
+    // Figma 分类
+    '工具': 'tools',
+    // Chrome DevTools 分类
+    '元素面板': 'elements_panel'
+    // Photoshop 使用默认分类映射（文件、编辑）
   }
   
   const key = categoryMap[category] || category.toLowerCase()
@@ -96,7 +118,107 @@ export function useShortcutDescription(description: string) {
     '转到行': 'go_to_line',
     '转到最后编辑位置': 'go_to_last_edit',
     '下一个问题': 'next_problem',
-    '上一个问题': 'previous_problem'
+    '上一个问题': 'previous_problem',
+    // HBuilder X 快捷键描述映射
+    '新建项目': 'new_project',
+    '保存文件': 'save_file',
+    '关闭当前文件': 'close_current_file',
+    '关闭所有文件': 'close_all_files',
+    '重新打开关闭的文件': 'reopen_closed_file',
+    '查看定义': 'peek_definition',
+    '查找引用': 'find_references',
+    '后退': 'go_back',
+    '前进': 'go_forward',
+    '重做': 'redo',
+    '剪切': 'cut',
+    '全选': 'select_all',
+    '选择行': 'select_line',
+    '选择相同词': 'select_word',
+    '选择所有相同词': 'select_all_words',
+    '复制行': 'duplicate_line',
+    '向上移动行': 'move_line_up',
+    '向下移动行': 'move_line_down',
+    '添加光标': 'add_cursor',
+    '撤销光标': 'undo_cursor',
+    '替换': 'replace',
+    '在文件中查找': 'find_in_files',
+    '在文件中替换': 'replace_in_files',
+    '格式化文档': 'format_document',
+    '格式化选择': 'format_selection',
+    '切换行注释': 'toggle_line_comment',
+    '切换块注释': 'toggle_block_comment',
+    '折叠区域': 'fold_region',
+    '展开区域': 'unfold_region',
+    '折叠所有': 'fold_all',
+    '展开所有': 'unfold_all',
+    '运行到手机或模拟器': 'run_to_device',
+    '运行到内置浏览器': 'run_in_browser',
+    '发行': 'publish',
+    '刷新': 'refresh',
+    '触发建议': 'trigger_suggest',
+    '触发参数提示': 'trigger_parameter_hints',
+    '选择建议': 'select_suggestion',
+    '切换侧边栏': 'toggle_sidebar',
+    '显示资源管理器': 'show_explorer',
+    '显示搜索': 'show_search',
+    '显示源代码管理': 'show_scm',
+    '显示调试': 'show_debug',
+    '显示插件': 'show_extensions',
+    '新建终端': 'new_terminal',
+    '切换终端': 'toggle_terminal',
+    // GoLand 特有描述
+    '在测试和代码之间切换': 'switch_between_test_and_code',
+    '实现接口': 'implement_interface',
+    '优化导入': 'optimize_imports',
+    // HBuilder X 缺失的描述映射
+    '转到定义': 'go_to_definition',
+    '撤销': 'undo',
+    '复制': 'copy',
+    '粘贴': 'paste',
+    '删除行': 'delete_line',
+    '查找': 'find',
+    // IntelliJ IDEA 缺失的描述映射
+    '重写方法': 'override_methods',
+    '实现方法': 'implement_methods',
+    '生成代码（getter、setter、构造函数等）': 'generate_code',
+    '跳转到父类/方法': 'go_to_super',
+    '提取字段': 'extract_field',
+    // Sublime Text 缺失的描述映射
+    '转到任何内容': 'go_to_anything',
+    '转到项目中的符号': 'go_to_symbol_in_project',
+    '选择单词': 'select_word',
+    '将选择拆分为行': 'split_into_lines',
+    '选择括号内容': 'expand_selection_to_brackets',
+    '跳转到匹配的括号': 'jump_to_matching_bracket',
+    // WebStorm 缺失的描述映射
+    '按文件名查找文件': 'find_file_by_name',
+    '最近打开的文件': 'recent_files',
+    '代码补全': 'code_completion',
+    // Xcode 缺失的描述映射
+    '打开': 'open',
+    '构建': 'build',
+    '清理构建文件夹': 'clean_build_folder',
+    '测试': 'test',
+    '快速打开': 'quick_open',
+    // Photoshop 特有描述映射
+    '新建': 'new',
+    '存储为Web所用格式': 'save_for_web',
+    // Figma 描述映射
+    '打开文件浏览器': 'open_file_browser',
+    '保存到版本历史': 'save_to_version_history',
+    '导出': 'export',
+    '移动工具': 'move_tool',
+    '框架工具': 'frame_tool',
+    '矩形工具': 'rectangle_tool',
+    '椭圆工具': 'ellipse_tool',
+    '直线工具': 'line_tool',
+    '文本工具': 'text_tool',
+    // Chrome DevTools 描述映射
+    '打开开发者工具并聚焦元素面板': 'open_devtools_focus_elements',
+    '切换到元素面板': 'switch_to_elements_panel',
+    '切换到源代码面板': 'switch_to_sources_panel',
+    '编辑HTML元素': 'edit_html_element',
+    '隐藏元素': 'hide_element'
   }
   
   const key = descriptionMap[description]
@@ -130,7 +252,33 @@ export const i18nTools = {
       '多光标': 'multi_cursor',
       '运行': 'run',
       'C/C++特有': 'cpp_specific',
-      '帮助': 'help'
+      '帮助': 'help',
+      '格式化': 'formatting',
+      '注释': 'comment',
+      '代码折叠': 'code_folding',
+      'uni-app': 'uni_app',
+      '智能感知': 'intelligence',
+      '终端': 'terminal',
+      // Firefox DevTools 特有分类
+      '基础': 'basics',
+      '面板导航': 'panel_navigation',
+      '控制台': 'console',
+      // GoLand 特有分类
+      'Go特有': 'go_specific',
+      // IntelliJ IDEA 特有分类
+      'Java特有': 'java_specific',
+      // Sublime Text 特有分类
+      '选择': 'selection',
+      // WebStorm 特有分类
+      '代码': 'code',
+      // Xcode 特有分类
+      '构建': 'build',
+      '测试': 'testing',
+      // Figma 分类
+      '工具': 'tools',
+      // Chrome DevTools 分类
+      '元素面板': 'elements_panel'
+      // Photoshop 使用默认分类映射（文件、编辑）
     }
     
     const key = categoryMap[category] || category.toLowerCase()
@@ -198,7 +346,123 @@ export const i18nTools = {
       '转到行': 'go_to_line',
       '转到最后编辑位置': 'go_to_last_edit',
       '下一个问题': 'next_problem',
-      '上一个问题': 'previous_problem'
+      '上一个问题': 'previous_problem',
+      // HBuilder X 快捷键描述映射
+      '新建项目': 'new_project',
+      '保存文件': 'save_file',
+      '关闭当前文件': 'close_current_file',
+      '关闭所有文件': 'close_all_files',
+      '重新打开关闭的文件': 'reopen_closed_file',
+      '查看定义': 'peek_definition',
+      '查找引用': 'find_references',
+      '后退': 'go_back',
+      '前进': 'go_forward',
+      '重做': 'redo',
+      '剪切': 'cut',
+      '全选': 'select_all',
+      '选择行': 'select_line',
+      '选择相同词': 'select_word',
+      '选择所有相同词': 'select_all_words',
+      '复制行': 'duplicate_line',
+      '向上移动行': 'move_line_up',
+      '向下移动行': 'move_line_down',
+      '添加光标': 'add_cursor',
+      '撤销光标': 'undo_cursor',
+      '替换': 'replace',
+      '在文件中查找': 'find_in_files',
+      '在文件中替换': 'replace_in_files',
+      '格式化文档': 'format_document',
+      '格式化选择': 'format_selection',
+      '切换行注释': 'toggle_line_comment',
+      '切换块注释': 'toggle_block_comment',
+      '折叠区域': 'fold_region',
+      '展开区域': 'unfold_region',
+      '折叠所有': 'fold_all',
+      '展开所有': 'unfold_all',
+      '运行到手机或模拟器': 'run_to_device',
+      '运行到内置浏览器': 'run_in_browser',
+      '发行': 'publish',
+      '刷新': 'refresh',
+      '触发建议': 'trigger_suggest',
+      '触发参数提示': 'trigger_parameter_hints',
+      '选择建议': 'select_suggestion',
+      '切换侧边栏': 'toggle_sidebar',
+      '显示资源管理器': 'show_explorer',
+      '显示搜索': 'show_search',
+      '显示源代码管理': 'show_scm',
+      '显示调试': 'show_debug',
+      '显示插件': 'show_extensions',
+      '新建终端': 'new_terminal',
+      '切换终端': 'toggle_terminal',
+      // Firefox DevTools 特有描述
+      '打开开发者工具': 'open_devtools',
+      '检查元素': 'inspect_element',
+      '切换到查看器面板': 'switch_to_inspector_panel',
+      '切换到控制台面板': 'switch_to_console_panel',
+      '切换到调试器面板': 'switch_to_debugger_panel',
+      '切换到网络面板': 'switch_to_network_panel',
+      '清空控制台': 'clear_console',
+      '执行控制台命令': 'execute_console_command',
+      '控制台多行输入': 'console_multiline_input',
+      '继续执行': 'continue_execution',
+      '单步跳过': 'step_over',
+      '单步进入': 'step_into',
+      '单步跳出': 'step_out',
+      '响应式设计模式': 'responsive_design_mode',
+      '在查看器中使用吸管工具': 'use_eyedropper_in_inspector',
+      // GoLand 特有描述
+      '在测试和代码之间切换': 'switch_between_test_and_code',
+      '实现接口': 'implement_interface',
+      '优化导入': 'optimize_imports',
+      // HBuilder X 缺失的描述映射
+      '转到定义': 'go_to_definition',
+      '撤销': 'undo',
+      '复制': 'copy',
+      '粘贴': 'paste',
+      '删除行': 'delete_line',
+      '查找': 'find',
+      // IntelliJ IDEA 缺失的描述映射
+      '重写方法': 'override_methods',
+      '实现方法': 'implement_methods',
+      '生成代码（getter、setter、构造函数等）': 'generate_code',
+      '跳转到父类/方法': 'go_to_super',
+      '提取字段': 'extract_field',
+      // Sublime Text 缺失的描述映射
+      '转到任何内容': 'go_to_anything',
+      '转到项目中的符号': 'go_to_symbol_in_project',
+      '选择单词': 'select_word',
+      '将选择拆分为行': 'split_into_lines',
+      '选择括号内容': 'expand_selection_to_brackets',
+      '跳转到匹配的括号': 'jump_to_matching_bracket',
+      // WebStorm 缺失的描述映射
+      '按文件名查找文件': 'find_file_by_name',
+      '最近打开的文件': 'recent_files',
+      '代码补全': 'code_completion',
+      // Xcode 缺失的描述映射
+      '打开': 'open',
+      '构建': 'build',
+      '清理构建文件夹': 'clean_build_folder',
+      '测试': 'test',
+      '快速打开': 'quick_open',
+      // Photoshop 特有描述映射
+      '新建': 'new',
+      '存储为Web所用格式': 'save_for_web',
+      // Figma 描述映射
+      '打开文件浏览器': 'open_file_browser',
+      '保存到版本历史': 'save_to_version_history',
+      '导出': 'export',
+      '移动工具': 'move_tool',
+      '框架工具': 'frame_tool',
+      '矩形工具': 'rectangle_tool',
+      '椭圆工具': 'ellipse_tool',
+      '直线工具': 'line_tool',
+      '文本工具': 'text_tool',
+      // Chrome DevTools 描述映射
+      '打开开发者工具并聚焦元素面板': 'open_devtools_focus_elements',
+      '切换到元素面板': 'switch_to_elements_panel',
+      '切换到源代码面板': 'switch_to_sources_panel',
+      '编辑HTML元素': 'edit_html_element',
+      '隐藏元素': 'hide_element'
     }
     
     const key = descriptionMap[description]

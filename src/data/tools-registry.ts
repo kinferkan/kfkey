@@ -190,7 +190,7 @@ export const toolsRegistry: ToolCategory[] = [
         shortcuts: photoshopShortcuts,
         popularity: 92,
         lastUpdated: new Date('2024-01-15'),
-        description: 'Adobe公司的专业图像编辑软件，是数字图像处理的行业标准。'
+        description: 'toolDescriptions.photoshop'
       },
       {
         id: 'figma',
