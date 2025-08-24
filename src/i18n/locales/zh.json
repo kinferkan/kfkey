@@ -556,7 +556,11 @@
     "show_documentation_and_reference": "显示文档和参考",
     "open_developer_website": "打开开发者网站",
     "move_to_line_start": "移动到行首",
-    "move_to_line_end": "移动到行尾"
+    "move_to_line_end": "移动到行尾",
+    "go_back_to_last_tool_window": "回到上一个工具窗口",
+    "go_to_editor": "转到编辑器",
+    "hide_active_or_last_window": "隐藏活动或最后活动的窗口",
+    "run_python_console": "运行Python控制台"
   },
   "vscodePage": {
     "pageTitle": "Visual Studio Code 工具介绍",

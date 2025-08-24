@@ -669,6 +669,9 @@ export const i18nTools = {
       '跳转到文件': 'go_to_file',
       '跳转到行': 'go_to_line',
       '最近的文件': 'recent_files',
+      '回到上一个工具窗口': 'go_back_to_last_tool_window',
+      '转到编辑器': 'go_to_editor',
+      '隐藏活动或最后活动的窗口': 'hide_active_or_last_window',
       // PyCharm 特有描述
       '查看文档': 'quick_docs',
       '新建文件': 'new_file',
@@ -688,6 +691,7 @@ export const i18nTools = {
       '跳转到文件': 'go_to_file',
       '跳转到行': 'go_to_line',
       '最近的文件': 'recent_files',
+      '运行Python控制台': 'run_python_console',
       // Sublime Text 特有描述
       '转到任何内容': 'go_to_anything',
       '转到项目中的符号': 'go_to_symbol_in_project',
