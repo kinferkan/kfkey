@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ArrowLeft, Heart, Share2, Download, Filter, Search, Monitor, ExternalLink } from 'lucide-react'
+import { ArrowLeft, Share2, Download, Search, Monitor, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -90,7 +90,7 @@ export function ToolDetail({ tool, onBack }: ToolDetailProps) {
   // 处理导航到独立页面
   const handleNavigateToPage = () => {
     if (tool.id === 'vscode' || tool.id === 'sublime' || tool.id === 'intellij-java' || tool.id === 'eclipse' || tool.id === 'webstorm' || tool.id === 'pycharm' || tool.id === 'goland' || tool.id === 'clion' || tool.id === 'android-studio' || tool.id === 'xcode' || tool.id === 'hbuilderx' || tool.id === 'atom' || tool.id === 'photoshop' || tool.id === 'figma' || tool.id === 'chrome-devtools' || tool.id === 'firefox-devtools') {
-      window.open(`/tools/${tool.id}`, '_blank')
+      navigate(`/tools/${tool.id}`)
     }
   }
 

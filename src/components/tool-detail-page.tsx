@@ -3,8 +3,6 @@ import { toolsData } from '@/data/tools'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft } from 'lucide-react'
-import { favoriteService } from '@/data/tools'
 import { Tool } from '@/types'
 
 export function ToolDetailPage() {

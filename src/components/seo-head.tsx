@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { SEO_CONFIG, getToolSEO, getCategorySEO } from '@/config/seo-config'
 
 interface SEOHeadProps {
-  title?: string
-  description?: string
-  keywords?: string
+  title?: string | Record<string, string>
+  description?: string | Record<string, string>
+  keywords?: string | Record<string, string>
   canonical?: string
   ogImage?: string
   toolId?: string
@@ -21,38 +21,80 @@ export function SEOHead({
   toolId,
   categoryId
 }: SEOHeadProps) {
-  const { t, i18n } = useTranslation()
+  const { i18n } = useTranslation()
   
   // 根据当前语言获取SEO信息
   const currentLanguage = i18n.language
   
-  let defaultTitle, defaultDescription, defaultKeywords
-  
-  if (toolId) {
-    // 工具页面SEO
-    const toolSEO = getToolSEO(toolId, currentLanguage)
-    defaultTitle = title || toolSEO.title
-    defaultDescription = description || toolSEO.description
-    defaultKeywords = keywords || toolSEO.keywords
-  } else if (categoryId) {
-    // 分类页面SEO
-    const categorySEO = getCategorySEO(categoryId, currentLanguage)
-    defaultTitle = title || categorySEO.title
-    defaultDescription = description || categorySEO.description
-    defaultKeywords = keywords || categorySEO.keywords
-  } else {
-    // 默认页面SEO
-    defaultTitle = title || (typeof SEO_CONFIG.defaultTitle === 'string' 
-      ? SEO_CONFIG.defaultTitle 
-      : SEO_CONFIG.defaultTitle[currentLanguage as keyof typeof SEO_CONFIG.defaultTitle] || SEO_CONFIG.defaultTitle['en'])
+  // 处理title，确保是字符串类型
+  const getTitle = (): string => {
+    if (typeof title === 'string') return title;
+    if (typeof title === 'object' && title !== null) {
+      return title[currentLanguage as keyof typeof title] || title['en'] || 'KeyFlow';
+    }
     
-    defaultDescription = description || (typeof SEO_CONFIG.defaultDescription === 'string'
+    if (toolId) {
+      const toolSEO = getToolSEO(toolId, currentLanguage);
+      return toolSEO.title;
+    }
+    
+    if (categoryId) {
+      const categorySEO = getCategorySEO(categoryId, currentLanguage);
+      return categorySEO.title;
+    }
+    
+    return typeof SEO_CONFIG.defaultTitle === 'string'
+      ? SEO_CONFIG.defaultTitle
+      : SEO_CONFIG.defaultTitle[currentLanguage as keyof typeof SEO_CONFIG.defaultTitle] || SEO_CONFIG.defaultTitle['en'];
+  };
+  
+  // 处理description，确保是字符串类型
+  const getDescription = (): string => {
+    if (typeof description === 'string') return description;
+    if (typeof description === 'object' && description !== null) {
+      return description[currentLanguage as keyof typeof description] || description['en'] || '';
+    }
+    
+    if (toolId) {
+      const toolSEO = getToolSEO(toolId, currentLanguage);
+      return toolSEO.description;
+    }
+    
+    if (categoryId) {
+      const categorySEO = getCategorySEO(categoryId, currentLanguage);
+      return categorySEO.description;
+    }
+    
+    return typeof SEO_CONFIG.defaultDescription === 'string'
       ? SEO_CONFIG.defaultDescription
-      : SEO_CONFIG.defaultDescription[currentLanguage as keyof typeof SEO_CONFIG.defaultDescription] || SEO_CONFIG.defaultDescription['en'])
-    
-    defaultKeywords = keywords || (SEO_CONFIG.keywords.primary[currentLanguage as keyof typeof SEO_CONFIG.keywords.primary] || SEO_CONFIG.keywords.primary['en']).join(', ')
-  }
+      : SEO_CONFIG.defaultDescription[currentLanguage as keyof typeof SEO_CONFIG.defaultDescription] || SEO_CONFIG.defaultDescription['en'];
+  };
   
+  // 处理keywords，确保是字符串类型
+  const getKeywords = (): string => {
+    if (typeof keywords === 'string') return keywords;
+    if (typeof keywords === 'object' && keywords !== null) {
+      return keywords[currentLanguage as keyof typeof keywords] || keywords['en'] || '';
+    }
+    
+    if (toolId) {
+      const toolSEO = getToolSEO(toolId, currentLanguage);
+      return toolSEO.keywords;
+    }
+    
+    if (categoryId) {
+      const categorySEO = getCategorySEO(categoryId, currentLanguage);
+      return categorySEO.keywords;
+    }
+    
+    return (SEO_CONFIG.keywords.primary[currentLanguage as keyof typeof SEO_CONFIG.keywords.primary] || SEO_CONFIG.keywords.primary['en']).join(', ');
+  };
+  
+  const defaultTitle = getTitle();
+  const defaultDescription = getDescription();
+  const defaultKeywords = getKeywords();
+  
+  // 确保标题包含品牌名
   const fullTitle = defaultTitle.includes('KeyFlow') ? defaultTitle : `${defaultTitle} - KeyFlow`
   
   // 根据语言设置OG locale

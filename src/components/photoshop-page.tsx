@@ -4,9 +4,11 @@ import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import { SEO_CONFIG } from '@/config/seo-config'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 export function PhotoshopPage() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   
   useEffect(() => {
     // 添加样式到页面
@@ -147,8 +149,8 @@ export function PhotoshopPage() {
           <div className="container mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <Button variant="ghost" size="icon" onClick={() => window.close()}>
-                  <ArrowLeft className="w-5 h-5" />
+                <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
+                  <ArrowLeft className="h-5 w-5" />
                 </Button>
                 <h1 className="text-2xl font-bold">{t('photoshopPage.pageTitle')}</h1>
               </div>

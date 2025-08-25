@@ -4,9 +4,7 @@ import { TopNavbar } from '@/components/top-navbar'
 import { Sidebar } from '@/components/sidebar'
 import { ToolGrid } from '@/components/tool-grid'
 import { toolsData } from '@/data/tools'
-import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
-import { HelmetProvider } from 'react-helmet-async'
 import { SEOHead } from '@/components/seo-head'
 
 export function CategoryPage() {

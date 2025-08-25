@@ -25,7 +25,7 @@ import { useState, useEffect } from 'react'
 import { TopNavbar } from '@/components/top-navbar'
 import { Sidebar } from '@/components/sidebar'
 import { toolsData } from '@/data/tools'
-import { Tool } from '@/types'
+
 import { ToolGrid } from '@/components/tool-grid'
 
 // 创建一个包装组件来处理工具详情页的状态

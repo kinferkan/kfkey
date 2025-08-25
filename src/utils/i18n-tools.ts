@@ -1,1043 +1,303 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 
-export function useToolDescription(toolId: string, fallback?: string) {
-  const { t } = useTranslation()
-  return t(`toolDescriptions.${toolId}`, fallback || '')
-}
+/**
+ * 快捷键分类映射
+ * 按应用程序组织，避免全局命名冲突
+ */
+const shortcutCategoryMaps = {
+  // 通用分类，适用于多个应用
+  common: {
+    general: 'general',
+    file: 'file',
+    navigation: 'navigation',
+    editing: 'editing',
+    search: 'search',
+    debugging: 'debugging',
+    refactoring: 'refactoring',
+    version_control: 'version_control',
+    view: 'view',
+    window: 'window',
+    basics: 'basics',
+    formatting: 'formatting',
+    comment: 'comment',
+    selection: 'selection',
+  },
 
-export function useShortcutCategory(category: string) {
-  const { t } = useTranslation()
-  
-  const categoryMap: Record<string, string> = {
-    '通用': 'general',
-    '文件': 'file',
-    '导航': 'navigation',
-    '编辑': 'editing',
-    '搜索': 'search',
-    '搜索与替换': 'search',
-    '搜索替换': 'search',
-    '调试': 'debugging',
-    '重构': 'refactoring',
-    '版本控制': 'version_control',
-    '视图': 'view',
-    '窗口': 'window',
-    '窗口管理': 'window',
-    '查找': 'search',
-    '多光标': 'multi_cursor',
-    '运行': 'run',
-    'C/C++特有': 'cpp_specific',
-    '帮助': 'help',
-    '格式化': 'formatting',
-    '注释': 'comment',
-    '代码折叠': 'code_folding',
-    'uni-app': 'uni_app',
-    '智能感知': 'intelligence',
-    '终端': 'terminal',
-    // GoLand 特有分类
-    'Go特有': 'go_specific',
-    // IntelliJ IDEA 特有分类
-    'Java特有': 'java_specific',
-    // Sublime Text 特有分类
-    '选择': 'selection',
-    // WebStorm 特有分类
-    '代码': 'code',
-    // Xcode 特有分类
-    '构建': 'build',
-    '测试': 'testing',
-    // Figma 分类
-    '工具': 'tools',
-    // Chrome DevTools 分类
-    '元素面板': 'elements_panel',
-    // Android Studio 特有分类
-    'Android开发': 'android_development'
-    // Photoshop 使用默认分类映射（文件、编辑）
+  // VS Code 特有分类
+  vscode: {
+    multi_cursor: 'multi_cursor',
+    code_folding: 'code_folding',
+    terminal: 'terminal',
+    panel_navigation: 'panel_navigation',
+  },
+
+  // IntelliJ IDEA 特有分类
+  intellij: {
+    java_specific: 'java_specific',
+    intelligence: 'intelligence',
+    build: 'build',
+    testing: 'testing',
+    code_generation: 'code_generation',
+  },
+
+  // 浏览器开发工具特有分类
+  browser: {
+    console: 'console',
+    elements_panel: 'elements_panel',
+  },
+
+  // 其他应用特定分类可以在这里添加
+};
+
+/**
+ * 快捷键描述映射
+ * 按应用程序和操作类型组织
+ */
+const shortcutDescriptionMaps = {
+  // 通用操作，适用于多个应用
+  common: {
+    file: {
+      new_file: 'new_file',
+      open_file: 'open_file',
+      save: 'save',
+      save_as: 'save_as',
+      save_all: 'save_all',
+      close: 'close',
+      close_all: 'close_all',
+    },
+    editing: {
+      cut: 'cut',
+      copy: 'copy',
+      paste: 'paste',
+      undo: 'undo',
+      redo: 'redo',
+      delete_line: 'delete_line',
+    },
+    search: {
+      find: 'find',
+      replace: 'replace',
+      find_next: 'find_next',
+      find_previous: 'find_previous',
+    },
+  },
+
+  // VS Code 特有操作
+  vscode: {
+    general: {
+      command_palette: 'command_palette',
+      quick_open: 'quick_open',
+      new_window: 'new_window',
+    },
+    navigation: {
+      goto_line: 'goto_line',
+      go_to_definition: 'go_to_definition',
+      peek_definition: 'peek_definition',
+    },
+  },
+
+  // IntelliJ IDEA 特有操作
+  intellij: {
+    general: {
+      go_to_anything: 'go_to_anything',
+      go_to_symbol: 'go_to_symbol',
+    },
+    refactoring: {
+      extract_method: 'extract_method',
+      extract_variable: 'extract_variable',
+      rename: 'rename',
+    },
+  },
+
+  // 其他应用特定操作可以在这里添加
+};
+
+/**
+ * 获取工具描述
+ * @param t 翻译函数
+ * @param toolName 工具名称
+ * @param fallback 回退文本
+ * @returns 工具描述文本
+ */
+export const getToolDescription = (t: TFunction, toolName: string, fallback?: string): string => {
+  try {
+    const translationKey = `toolDescriptions.${toolName}`;
+    const translation = t(translationKey);
+    // 检查是否翻译成功（避免返回键本身）
+    return translation !== translationKey ? translation : (fallback || toolName);
+  } catch (error) {
+    console.error(`Failed to get description for tool: ${toolName}`, error);
+    return fallback || toolName;
   }
-  
-  const key = categoryMap[category] || category.toLowerCase()
-  return t(`shortcutCategories.${key}`, category)
-}
+};
 
-export function useShortcutDescription(description: string) {
-  const { t } = useTranslation()
-  
-  const descriptionMap: Record<string, string> = {
-    '命令面板': 'command_palette',
-    '快速打开文件': 'quick_open',
-    '新建窗口': 'new_window',
-    '关闭窗口': 'close_window',
-    '新建文件': 'new_file',
-    '打开文件': 'open_file',
-    '保存': 'save',
-    '另存为': 'save_as',
-    '保存所有': 'save_all',
-    '关闭': 'close',
-    '关闭所有': 'close_all',
-    '重新打开关闭的编辑器': 'reopen_closed',
-    '保持预览模式编辑器打开': 'keep_preview',
-    '打开下一个': 'next_tab',
-    '打开上一个': 'prev_tab',
-    '复制活动文件的路径': 'copy_path',
-    '在资源管理器中显示活动文件': 'reveal_in_explorer',
-    '在新窗口/实例中显示活动文件': 'show_in_new_window',
-    '查找操作': 'find_action',
-    '随处搜索': 'search_everywhere',
-    '转到类': 'go_to_class',
-    '转到文件': 'go_to_file',
-    '转到符号': 'go_to_symbol',
-    '复制当前行': 'duplicate_line',
-    '删除当前行': 'delete_line',
-    '注释/取消注释': 'toggle_comment',
-    '增加缩进': 'indent',
-    '减少缩进': 'outdent',
-    '在当前文件中查找': 'find_in_file',
-    '在项目中查找': 'find_in_project',
-    '查找下一个': 'find_next',
-    '切换文件树视图': 'toggle_tree_view',
-    '切换全屏': 'toggle_fullscreen',
-    '增大字体': 'increase_font_size',
-    '向下添加光标': 'add_cursor_below',
-    '向上添加光标': 'add_cursor_above',
-    '复制当前行或选中内容': 'duplicate_line_selection',
-    '注释/取消注释当前行': 'toggle_line_comment',
-    '块注释': 'block_comment',
-    '跳转到声明': 'go_to_declaration',
-    '跳转到实现': 'go_to_implementation',
-    '查找使用': 'find_usages',
-    '重命名': 'rename',
-    '提取方法': 'extract_method',
-    '提取变量': 'extract_variable',
-    '运行': 'run',
-    '调试': 'debug',
-    '切换断点': 'toggle_breakpoint',
-    '在头文件和源文件之间切换': 'switch_header_source',
-    '优化包含': 'optimize_includes',
-    '格式化代码': 'format_code',
-    '显示键盘快捷键': 'show_keybindings',
-    '打开资源': 'open_resource',
-    '打开类型': 'open_type',
-    '打开搜索对话框': 'open_search_dialog',
-    '查找上一个': 'find_previous',
-    '转到行': 'go_to_line',
-    '转到最后编辑位置': 'go_to_last_edit',
-    '下一个问题': 'next_problem',
-    '上一个问题': 'previous_problem',
-    // HBuilder X 快捷键描述映射
-    '新建项目': 'new_project',
-    '保存文件': 'save_file',
-    '关闭当前文件': 'close_current_file',
-    '关闭所有文件': 'close_all_files',
-    '重新打开关闭的文件': 'reopen_closed_file',
-    '查看定义': 'peek_definition',
-    '查找引用': 'find_references',
-    '后退': 'go_back',
-    '前进': 'go_forward',
-    '重做': 'redo',
-    '剪切': 'cut',
-    '全选': 'select_all',
-    '选择行': 'select_line',
-    '选择相同词': 'select_word',
-    '选择所有相同词': 'select_all_words',
-    '复制行': 'duplicate_line',
-    '向上移动行': 'move_line_up',
-    '向下移动行': 'move_line_down',
-    '添加光标': 'add_cursor',
-    '撤销光标': 'undo_cursor',
-    '替换': 'replace',
-    '在文件中查找': 'find_in_files',
-    '在文件中替换': 'replace_in_files',
-    '格式化文档': 'format_document',
-    '格式化选择': 'format_selection',
-    '切换行注释': 'toggle_line_comment',
-    '切换块注释': 'toggle_block_comment',
-    '折叠区域': 'fold_region',
-    '展开区域': 'unfold_region',
-    '折叠所有': 'fold_all',
-    '展开所有': 'unfold_all',
-    '运行到手机或模拟器': 'run_to_device',
-    '运行到内置浏览器': 'run_in_browser',
-    '发行': 'publish',
-    '刷新': 'refresh',
-    '触发建议': 'trigger_suggest',
-    '触发参数提示': 'trigger_parameter_hints',
-    '选择建议': 'select_suggestion',
-    '切换侧边栏': 'toggle_sidebar',
-    '显示资源管理器': 'show_explorer',
-    '显示搜索': 'show_search',
-    '显示源代码管理': 'show_scm',
-    '显示调试': 'show_debug',
-    '显示插件': 'show_extensions',
-    '新建终端': 'new_terminal',
-    '切换终端': 'toggle_terminal',
-    // GoLand 特有描述
-    '在测试和代码之间切换': 'switch_between_test_and_code',
-    '实现接口': 'implement_interface',
-    '优化导入': 'optimize_imports',
-    // HBuilder X 缺失的描述映射
-    '转到定义': 'go_to_definition',
-    '撤销': 'undo',
-    '复制': 'copy',
-    '粘贴': 'paste',
-    '删除行': 'delete_line',
-    '查找': 'find',
-    // IntelliJ IDEA 缺失的描述映射
-    '重写方法': 'override_methods',
-    '实现方法': 'implement_methods',
-    '生成代码（getter、setter、构造函数等）': 'generate_code',
-    '跳转到父类/方法': 'go_to_super',
-    '提取字段': 'extract_field',
-    // Sublime Text 缺失的描述映射
-    '转到任何内容': 'go_to_anything',
-    '转到项目中的符号': 'go_to_symbol_in_project',
-    '选择单词': 'select_word',
-    '将选择拆分为行': 'split_into_lines',
-    '选择括号内容': 'expand_selection_to_brackets',
-    '跳转到匹配的括号': 'jump_to_matching_bracket',
-    // WebStorm 缺失的描述映射
-    '按文件名查找文件': 'find_file_by_name',
-    '最近打开的文件': 'recent_files',
-    '代码补全': 'code_completion',
-    // Xcode 缺失的描述映射
-    '打开': 'open',
-    '构建': 'build',
-    '清理构建文件夹': 'clean_build_folder',
-    '测试': 'test',
-    '快速打开': 'quick_open',
-    // Photoshop 特有描述映射
-    '新建': 'new',
-    '存储为Web所用格式': 'save_for_web',
-    // Figma 描述映射
-    '打开文件浏览器': 'open_file_browser',
-    '保存到版本历史': 'save_to_version_history',
-    '导出': 'export',
-    '移动工具': 'move_tool',
-    '框架工具': 'frame_tool',
-    '矩形工具': 'rectangle_tool',
-    '椭圆工具': 'ellipse_tool',
-    '直线工具': 'line_tool',
-    '文本工具': 'text_tool',
-    // Chrome DevTools 描述映射
-    '打开开发者工具并聚焦元素面板': 'open_devtools_focus_elements',
-    '切换到元素面板': 'switch_to_elements_panel',
-    '切换到源代码面板': 'switch_to_sources_panel',
-    '编辑HTML元素': 'edit_html_element',
-    '隐藏元素': 'hide_element',
-    // Android Studio 特有描述
-    '转到声明': 'go_to_declaration',
-    '转到实现': 'go_to_implementation',
-    '在当前文件中替换': 'replace_in_current_file',
-    '在项目中替换': 'replace_in_project',
-    // Atom 特有描述
-    '上一个标签页': 'previous_tab',
-    '下一个标签页': 'next_tab',
-    '关闭标签页': 'close_tab',
-    '关闭面板': 'close_panel',
-    '减小字体': 'decrease_font_size',
-    '切换Git面板': 'toggle_git_panel',
-    '切换到右侧面板': 'switch_to_right_panel',
-    '切换开发者工具': 'toggle_developer_tools',
-    '向下分屏': 'split_down',
-    '向右分屏': 'split_right',
-    '在缓冲区中查找': 'find_in_buffer',
-    '展开代码': 'expand_code',
-    '折叠代码': 'fold_code',
-    '暂存文件': 'stage_file',
-    '自动缩进': 'auto_indent',
-    '选择整行': 'select_entire_line',
-    '重新加载窗口': 'reload_window',
-    '重置字体大小': 'reset_font_size'
+/**
+ * 获取快捷键分类
+ * @param t 翻译函数
+ * @param category 分类名称
+ * @param app 应用名称（可选）
+ * @returns 分类的本地化文本
+ */
+export const getShortcutCategory = (t: TFunction, category: string, app?: string): string => {
+  try {
+    // 首先尝试在应用特定的映射中查找
+    if (app && shortcutCategoryMaps[app as keyof typeof shortcutCategoryMaps]) {
+      const appMap = shortcutCategoryMaps[app as keyof typeof shortcutCategoryMaps];
+      const appCategory = (appMap as any)[category];
+      if (appCategory) {
+        const translationKey = `shortcutCategories.${appCategory}`;
+        const translation = t(translationKey);
+        return translation !== translationKey ? translation : category;
+      }
+    }
+    
+    // 如果应用特定映射中找不到，或者没有指定应用，则在通用映射中查找
+    const commonCategory = shortcutCategoryMaps.common[category as keyof typeof shortcutCategoryMaps.common];
+    if (commonCategory) {
+      const translationKey = `shortcutCategories.${commonCategory}`;
+      const translation = t(translationKey);
+      return translation !== translationKey ? translation : category;
+    }
+    
+    // 如果都找不到，返回原始分类名称
+    return category;
+  } catch (error) {
+    console.error(`Failed to get shortcut category: ${category}`, error);
+    return category;
   }
+};
+
+/**
+ * 获取快捷键描述
+ * @param t 翻译函数
+ * @param description 描述名称
+ * @param type 描述类型（可选）
+ * @param app 应用名称（可选）
+ * @returns 描述的本地化文本
+ */
+export const getShortcutDescription = (t: TFunction, description: string, type?: string, app?: string): string => {
+  try {
+    // 首先尝试在应用特定的映射中查找
+    if (app && shortcutDescriptionMaps[app as keyof typeof shortcutDescriptionMaps] && type) {
+      const appMap = shortcutDescriptionMaps[app as keyof typeof shortcutDescriptionMaps];
+      const typeMap = (appMap as any)[type];
+      if (typeMap) {
+        const key = (typeMap as any)[description];
+        if (key) {
+          const translationKey = `shortcutDescriptions.${key}`;
+          const translation = t(translationKey);
+          return translation !== translationKey ? translation : description;
+        }
+      }
+    }
+    
+    // 如果应用特定映射中找不到，或者没有指定应用，则在通用映射中查找
+    if (type) {
+      const commonTypeMap = shortcutDescriptionMaps.common[type as keyof typeof shortcutDescriptionMaps.common];
+      if (commonTypeMap) {
+        const key = (commonTypeMap as any)[description];
+        if (key) {
+          const translationKey = `shortcutDescriptions.${key}`;
+          const translation = t(translationKey);
+          return translation !== translationKey ? translation : description;
+        }
+      }
+    }
+    
+    // 作为最后的尝试，直接查找描述的翻译
+    const directTranslationKey = `shortcutDescriptions.${description}`;
+    const directTranslation = t(directTranslationKey);
+    if (directTranslation !== directTranslationKey) {
+      return directTranslation;
+    }
+    
+    // 如果都找不到，返回原始描述
+    return description;
+  } catch (error) {
+    console.error(`Failed to get shortcut description: ${description}`, error);
+    return description;
+  }
+};
+
+/**
+ * React Hook：获取工具描述
+ * @returns 工具描述函数
+ */
+export function useToolDescription() {
+  const { t } = useTranslation();
   
-  const key = descriptionMap[description]
-  return key ? t(`shortcutDescriptions.${key}`, description) : description
+  return (toolName: string, fallback?: string): string => {
+    return getToolDescription(t, toolName, fallback);
+  };
 }
 
 /**
- * 不使用Hook的版本，用于在非组件中使用
+ * React Hook：获取快捷键分类
+ * @returns 快捷键分类函数
  */
-export const i18nTools = {
-  getToolDescription: (t: any, toolId: string, fallback?: string) => {
-    return t(`toolDescriptions.${toolId}`, fallback || '')
-  },
+export function useShortcutCategory() {
+  const { t } = useTranslation();
   
-  getShortcutCategory: (t: any, category: string) => {
-    const categoryMap: Record<string, string> = {
-      '通用': 'general',
-      '文件': 'file',
-      '导航': 'navigation',
-      '编辑': 'editing',
-      '搜索': 'search',
-      '搜索与替换': 'search',
-      '搜索替换': 'search',
-      '调试': 'debugging',
-      '重构': 'refactoring',
-      '版本控制': 'version_control',
-      '视图': 'view',
-      '窗口': 'window',
-      '窗口管理': 'window',
-      '查找': 'search',
-      '多光标': 'multi_cursor',
-      '运行': 'run',
-      'C/C++特有': 'cpp_specific',
-      '帮助': 'help',
-      '格式化': 'formatting',
-      '注释': 'comment',
-      '代码折叠': 'code_folding',
-      'uni-app': 'uni_app',
-      '智能感知': 'intelligence',
-      '终端': 'terminal',
-      // Firefox DevTools 特有分类
-      '基础': 'basics',
-      '面板导航': 'panel_navigation',
-      '控制台': 'console',
-      // GoLand 特有分类
-      'Go特有': 'go_specific',
-      // IntelliJ IDEA 特有分类
-      'Java特有': 'java_specific',
-      // Sublime Text 特有分类
-      '选择': 'selection',
-      // WebStorm 特有分类
-      '代码': 'code',
-      // Xcode 特有分类
-      '构建': 'build',
-      '测试': 'testing',
-      // Figma 分类
-      '工具': 'tools',
-      // Chrome DevTools 分类
-      '元素面板': 'elements_panel',
-      // Android Studio 特有分类
-      'Android开发': 'android_development',
-      // Android Studio 其他分类
-      '代码生成': 'code_generation'
-      // Photoshop 使用默认分类映射（文件、编辑）
-    }
-    
-    const key = categoryMap[category] || category.toLowerCase()
-    return t(`shortcutCategories.${key}`, category)
-  },
-  
-  getShortcutDescription: (t: any, description: string) => {
-    const descriptionMap: Record<string, string> = {
-      '命令面板': 'command_palette',
-      '快速打开文件': 'quick_open',
-      '新建窗口': 'new_window',
-      '关闭窗口': 'close_window',
-      '新建文件': 'new_file',
-      '打开文件': 'open_file',
-      '保存': 'save',
-      '另存为': 'save_as',
-      '保存所有': 'save_all',
-      '关闭': 'close',
-      '关闭所有': 'close_all',
-      '重新打开关闭的编辑器': 'reopen_closed',
-      '保持预览模式编辑器打开': 'keep_preview',
-      '打开下一个': 'next_tab',
-      '打开上一个': 'prev_tab',
-      '复制活动文件的路径': 'copy_path',
-      '在资源管理器中显示活动文件': 'reveal_in_explorer',
-      '在新窗口/实例中显示活动文件': 'show_in_new_window',
-      '查找操作': 'find_action',
-      '随处搜索': 'search_everywhere',
-      '转到类': 'go_to_class',
-      '转到文件': 'go_to_file',
-      '转到符号': 'go_to_symbol',
-      '复制当前行': 'duplicate_line',
-      '删除当前行': 'delete_line',
-      '注释/取消注释': 'toggle_comment',
-      '增加缩进': 'indent',
-      '减少缩进': 'outdent',
-      '在当前文件中查找': 'find_in_file',
-      '在项目中查找': 'find_in_project',
-      '查找下一个': 'find_next',
-      '切换文件树视图': 'toggle_tree_view',
-      '切换全屏': 'toggle_fullscreen',
-      '增大字体': 'increase_font_size',
-      '向下添加光标': 'add_cursor_below',
-      '向上添加光标': 'add_cursor_above',
-      '复制当前行或选中内容': 'duplicate_line_selection',
-      '注释/取消注释当前行': 'toggle_line_comment',
-      '块注释': 'block_comment',
-      '跳转到声明': 'go_to_declaration',
-      '跳转到实现': 'go_to_implementation',
-      '查找使用': 'find_usages',
-      '重命名': 'rename',
-      '提取方法': 'extract_method',
-      '提取变量': 'extract_variable',
-      '运行': 'run',
-      '调试': 'debug',
-      '切换断点': 'toggle_breakpoint',
-      '在头文件和源文件之间切换': 'switch_header_source',
-      '优化包含': 'optimize_includes',
-      '格式化代码': 'format_code',
-      '显示键盘快捷键': 'show_keybindings',
-      '打开资源': 'open_resource',
-      '打开类型': 'open_type',
-      '打开搜索对话框': 'open_search_dialog',
-      '查找上一个': 'find_previous',
-      '转到行': 'go_to_line',
-      '转到最后编辑位置': 'go_to_last_edit',
-      '下一个问题': 'next_problem',
-      '上一个问题': 'previous_problem',
-      // HBuilder X 快捷键描述映射
-      '新建项目': 'new_project',
-      '保存文件': 'save_file',
-      '关闭当前文件': 'close_current_file',
-      '关闭所有文件': 'close_all_files',
-      '重新打开关闭的文件': 'reopen_closed_file',
-      '查看定义': 'peek_definition',
-      '查找引用': 'find_references',
-      '后退': 'go_back',
-      '前进': 'go_forward',
-      '重做': 'redo',
-      '剪切': 'cut',
-      '全选': 'select_all',
-      '选择行': 'select_line',
-      '选择相同词': 'select_word',
-      '选择所有相同词': 'select_all_words',
-      '复制行': 'duplicate_line',
-      '向上移动行': 'move_line_up',
-      '向下移动行': 'move_line_down',
-      '添加光标': 'add_cursor',
-      '撤销光标': 'undo_cursor',
-      '替换': 'replace',
-      '在文件中查找': 'find_in_files',
-      '在文件中替换': 'replace_in_files',
-      '格式化文档': 'format_document',
-      '格式化选择': 'format_selection',
-      '切换行注释': 'toggle_line_comment',
-      '切换块注释': 'toggle_block_comment',
-      '折叠区域': 'fold_region',
-      '展开区域': 'unfold_region',
-      '折叠所有': 'fold_all',
-      '展开所有': 'unfold_all',
-      '运行到手机或模拟器': 'run_to_device',
-      '运行到内置浏览器': 'run_in_browser',
-      '发行': 'publish',
-      '刷新': 'refresh',
-      '触发建议': 'trigger_suggest',
-      '触发参数提示': 'trigger_parameter_hints',
-      '选择建议': 'select_suggestion',
-      '切换侧边栏': 'toggle_sidebar',
-      '显示资源管理器': 'show_explorer',
-      '显示搜索': 'show_search',
-      '显示源代码管理': 'show_scm',
-      '显示调试': 'show_debug',
-      '显示插件': 'show_extensions',
-      '新建终端': 'new_terminal',
-      '切换终端': 'toggle_terminal',
-      // Firefox DevTools 特有描述
-      '打开开发者工具': 'open_devtools',
-      '检查元素': 'inspect_element',
-      '切换到查看器面板': 'switch_to_inspector_panel',
-      '切换到控制台面板': 'switch_to_console_panel',
-      '切换到调试器面板': 'switch_to_debugger_panel',
-      '切换到网络面板': 'switch_to_network_panel',
-      '清空控制台': 'clear_console',
-      '执行控制台命令': 'execute_console_command',
-      '控制台多行输入': 'console_multiline_input',
-      '继续执行': 'continue_execution',
-      '单步跳过': 'step_over',
-      '单步进入': 'step_into',
-      '单步跳出': 'step_out',
-      '响应式设计模式': 'responsive_design_mode',
-      '在查看器中使用吸管工具': 'use_eyedropper_in_inspector',
-      // GoLand 特有描述
-      '在测试和代码之间切换': 'switch_between_test_and_code',
-      '实现接口': 'implement_interface',
-      '优化导入': 'optimize_imports',
-      // HBuilder X 缺失的描述映射
-      '转到定义': 'go_to_definition',
-      '撤销': 'undo',
-      '复制': 'copy',
-      '粘贴': 'paste',
-      '删除行': 'delete_line',
-      '查找': 'find',
-      // IntelliJ IDEA 缺失的描述映射
-      '重写方法': 'override_methods',
-      '实现方法': 'implement_methods',
-      '生成代码（getter、setter、构造函数等）': 'generate_code',
-      '跳转到父类/方法': 'go_to_super',
-      '提取字段': 'extract_field',
-      // Sublime Text 缺失的描述映射
-      '转到任何内容': 'go_to_anything',
-      '转到项目中的符号': 'go_to_symbol_in_project',
-      '选择单词': 'select_word',
-      '将选择拆分为行': 'split_into_lines',
-      '选择括号内容': 'expand_selection_to_brackets',
-      '跳转到匹配的括号': 'jump_to_matching_bracket',
-      // WebStorm 缺失的描述映射
-      '按文件名查找文件': 'find_file_by_name',
-      '代码补全': 'code_completion',
-      // Xcode 缺失的描述映射
-      '打开': 'open',
-      '构建': 'build',
-      '清理构建文件夹': 'clean_build_folder',
-      '测试': 'test',
-      '快速打开': 'quick_open',
-      // Photoshop 特有描述映射
-      '新建': 'new',
-      '存储为Web所用格式': 'save_for_web',
-      // Figma 描述映射
-      '打开文件浏览器': 'open_file_browser',
-      '保存到版本历史': 'save_to_version_history',
-      '导出': 'export',
-      '移动工具': 'move_tool',
-      '框架工具': 'frame_tool',
-      '矩形工具': 'rectangle_tool',
-      '椭圆工具': 'ellipse_tool',
-      '直线工具': 'line_tool',
-      '文本工具': 'text_tool',
-      // Chrome DevTools 描述映射
-      '打开开发者工具并聚焦元素面板': 'open_devtools_focus_elements',
-      '切换到元素面板': 'switch_to_elements_panel',
-      '切换到源代码面板': 'switch_to_sources_panel',
-      '编辑HTML元素': 'edit_html_element',
-      '隐藏元素': 'hide_element',
-      // Android Studio 特有描述映射
-      '显示意图操作和快速修复': 'show_intention_actions',
-      '打开设置对话框': 'open_settings_dialog',
-      '打开项目结构对话框': 'open_project_structure',
-      'VCS提交': 'vcs_commit',
-      'VCS推送': 'vcs_push',
-      '保存所有文件': 'save_all_files',
-      '关闭当前标签页': 'close_current_tab',
-      '关闭所有标签页': 'close_all_tabs',
-      '重新打开关闭的标签页': 'reopen_closed_tab',
-      '最近编辑的文件': 'recently_edited_files',
-      '打开/关闭项目工具窗口': 'toggle_project_tool_window',
-      '转到父类': 'go_to_super_class',
-      '上一个编辑位置': 'previous_edit_location',
-      '下一个编辑位置': 'next_edit_location',
-      '在打开的文件间切换': 'switch_between_open_files',
-      '扩展选择': 'expand_selection',
-      '收缩选择': 'shrink_selection',
-      '选择当前行': 'select_current_line',
-      '在文件中查找使用': 'find_usages_in_file',
-      '显示使用': 'show_usages',
-      '提取常量': 'extract_constant',
-      '提取参数': 'extract_parameter',
-      '移动': 'move_refactor',
-      '安全删除': 'safe_delete',
-      '调试运行': 'debug_run',
-      '正常运行': 'normal_run',
-      '查看断点': 'view_breakpoints',
-      '恢复程序': 'resume_program',
-      '运行到光标': 'run_to_cursor',
-      '计算表达式': 'evaluate_expression',
-      '生成代码': 'generate_code',
-      '插入实时模板': 'insert_live_template',
-      '环绕代码': 'surround_with',
-      '自动缩进行': 'auto_indent_lines',
-      '构建项目': 'build_project',
-      '重新构建项目': 'rebuild_project',
-      '运行配置选择': 'run_configuration_selection',
-      '调试配置选择': 'debug_configuration_selection',
-      '同步项目与Gradle文件': 'sync_project_with_gradle',
-      '同步': 'synchronize',
-      '最大化编辑器': 'maximize_editor',
-      '项目工具窗口': 'project_tool_window',
-      '收藏夹工具窗口': 'favorites_tool_window',
-      '查找工具窗口': 'find_tool_window',
-      '运行工具窗口': 'run_tool_window',
-      '调试工具窗口': 'debug_tool_window',
-      'TODO工具窗口': 'todo_tool_window',
-      '结构工具窗口': 'structure_tool_window',
-      '版本控制工具窗口': 'version_control_tool_window',
-      '消息工具窗口': 'messages_tool_window',
-      '关闭活动工具窗口': 'close_active_tool_window',
-      '基本代码补全': 'basic_code_completion',
-      '智能代码补全': 'smart_code_completion',
-      '参数信息': 'parameter_info',
-      '快速文档查看': 'quick_documentation',
-      '快速定义查看': 'quick_definition_lookup',
-      '错误描述': 'error_description',
-      // 缺失的Android Studio描述映射
-      '最近打开的文件': 'recent_files',
-      '转到声明': 'go_to_declaration',
-      '转到实现': 'go_to_implementation',
-      '在当前文件中替换': 'replace_in_current_file',
-      '在项目中替换': 'replace_in_project',
-      // Atom 特有描述映射
-      '上一个标签页': 'previous_tab',
-      '下一个标签页': 'next_tab',
-      '关闭标签页': 'close_tab',
-      '关闭面板': 'close_panel',
-      '减小字体': 'decrease_font_size',
-      '切换Git面板': 'toggle_git_panel',
-      '切换到右侧面板': 'switch_to_right_panel',
-      '切换开发者工具': 'toggle_developer_tools',
-      '向下分屏': 'split_down',
-      '向右分屏': 'split_right',
-      '在缓冲区中查找': 'find_in_buffer',
-      '展开代码': 'expand_code',
-      '折叠代码': 'fold_code',
-      '暂存文件': 'stage_file',
-      '自动缩进': 'auto_indent',
-      '选择整行': 'select_entire_line',
-      '重新加载窗口': 'reload_window',
-      '重置字体大小': 'reset_font_size',
-      // CLion 特有描述
-      '在路径中查找': 'find_in_path',
-      '在路径中替换': 'replace_in_path',
-      '关闭文件': 'close_file',
-      '跳转到行': 'go_to_line',
-      '跳转到文件': 'go_to_file',
-      '跳转到类': 'go_to_class',
-      '跳转到符号': 'go_to_symbol',
-      '最近文件': 'recent_files',
-      '智能代码补全': 'smart_code_completion',
-      '生成代码': 'generate_code',
-      '包围代码': 'surround_with',
-      '快速修复': 'quick_fix',
-      '显示意图操作': 'show_intention_actions',
-      '单步跳过': 'step_over',
-      '单步进入': 'step_into',
-      '单步跳出': 'step_out',
-      '继续执行': 'continue_execution',
-      '计算表达式': 'evaluate_expression',
-      '查看断点': 'view_breakpoints',
-      '构建项目': 'build_project',
-      '重新构建项目': 'rebuild_project',
-      '清理': 'clean',
-      '关闭当前标签': 'close_current_tab',
-      '下一个标签': 'next_tab',
-      '上一个标签': 'prev_tab',
-      '垂直分割': 'split_vertical',
-      '水平分割': 'split_horizontal',
-      'VCS操作弹出菜单': 'vcs_operations_popup',
-      '提交': 'commit',
-      '更新项目': 'update_project',
-      '推送': 'push',
-      '后退': 'go_back',
-      '前进': 'go_forward',
-      '代码补全': 'code_completion',
-      // Eclipse 特有描述
-      '转到最后编辑位置': 'go_to_last_edit',
-      '下一个问题': 'next_problem',
-      '上一个问题': 'previous_problem',
-      '新建': 'new',
-      '保存全部': 'save_all',
-      '关闭': 'close',
-      '整理导入': 'organize_imports',
-      '格式化代码': 'format_code',
-      '重命名': 'rename',
-      // HBuilder X 特有描述
-      '复制行': 'duplicate_line',
-      '向上移动行': 'move_line_up',
-      '向下移动行': 'move_line_down',
-      '向上添加光标': 'add_cursor_above',
-      '向下添加光标': 'add_cursor_below',
-      '添加光标': 'add_cursor',
-      '撤销光标': 'undo_cursor',
-      '在文件中查找': 'find_in_files',
-      '在文件中替换': 'replace_in_files',
-      '格式化文档': 'format_document',
-      '格式化选择': 'format_selection',
-      '切换行注释': 'toggle_line_comment',
-      '切换块注释': 'toggle_block_comment',
-      '折叠区域': 'fold_region',
-      '展开区域': 'unfold_region',
-      '折叠所有': 'fold_all',
-      '展开所有': 'unfold_all',
-      '运行到手机或模拟器': 'run_to_device',
-      '运行到内置浏览器': 'run_in_browser',
-      '发行': 'publish',
-      '触发建议': 'trigger_suggest',
-      '触发参数提示': 'trigger_parameter_hints',
-      '选择建议': 'select_suggestion',
-      '切换侧边栏': 'toggle_sidebar',
-      '显示资源管理器': 'show_explorer',
-      '显示搜索': 'show_search',
-      '显示源代码管理': 'show_scm',
-      '显示调试': 'show_debug',
-      '显示插件': 'show_extensions',
-      '新建终端': 'new_terminal',
-      '切换终端': 'toggle_terminal',
-      // IntelliJ IDEA 特有描述
-      '新建文件': 'new_file',
-      '保存所有': 'save_all',
-      '关闭': 'close',
-      '重新打开最近关闭的文件': 'reopen',
-      '复制行': 'duplicate_line',
-      '删除行': 'delete_line',
-      '上移行': 'move_line_up',
-      '下移行': 'move_line_down',
-      '行注释': 'comment_line',
-      '块注释': 'comment_block',
-      '格式化代码': 'format_code',
-      '优化导入': 'optimize_imports',
-      '跳转到类': 'go_to_class',
-      '跳转到文件': 'go_to_file',
-      '跳转到行': 'go_to_line',
-      '最近的文件': 'recent_files',
-      '回到上一个工具窗口': 'go_back_to_last_tool_window',
-      '转到编辑器': 'go_to_editor',
-      '隐藏活动或最后活动的窗口': 'hide_active_or_last_window',
-      // PyCharm 特有描述
-      '查看文档': 'quick_docs',
-      '新建文件': 'new_file',
-      '保存所有': 'save_all',
-      '关闭': 'close',
-      '撤销': 'undo',
-      '重做': 'redo',
-      '复制': 'copy',
-      '粘贴': 'paste',
-      '剪切': 'cut',
-      '全选': 'select_all',
-      '查找': 'find',
-      '替换': 'replace',
-      '在路径中查找': 'find_in_path',
-      '随处搜索': 'search_everywhere',
-      '跳转到类': 'go_to_class',
-      '跳转到文件': 'go_to_file',
-      '跳转到行': 'go_to_line',
-      '最近的文件': 'recent_files',
-      '运行Python控制台': 'run_python_console',
-      // Sublime Text 特有描述
-      '转到任何内容': 'go_to_anything',
-      '转到项目中的符号': 'go_to_symbol_in_project',
-      '复制行': 'duplicate_line',
-      '删除行': 'delete_line',
-      '切换注释': 'toggle_comment',
-      '在文件中查找': 'find_in_files',
-      '在文件中替换': 'replace_in_files',
-      '选择所有匹配项': 'select_all_matching',
-      '向下添加光标': 'add_cursor_column',
-      '新建文件': 'new_file',
-      '打开文件': 'open_file',
-      '保存': 'save',
-      '关闭文件': 'close_file',
-      '分割视图：2列': 'split_view_2_columns',
-      '单一视图': 'split_view_single',
-      '聚焦组 1': 'focus_group_1',
-      '移动文件到组 1': 'move_file_to_group_1',
-      '折叠全部': 'fold_all',
-      '选择构建系统': 'select_build_system',
-      '切换书签': 'toggle_bookmark',
-      '下一个书签': 'next_bookmark',
-      '上一个书签': 'prev_bookmark',
-      '安装包': 'install_package',
-      '首选项': 'preferences',
-      '关闭文件': 'close_file',
-      // VS Code 特有描述
-      '快速打开文件': 'quick_open',
-      '保持预览模式编辑器打开': 'keep_preview',
-      '复制活动文件的路径': 'copy_path',
-      '在资源管理器中显示活动文件': 'reveal_in_explorer',
-      '在新窗口/实例中显示活动文件': 'show_in_new_window',
-      '查找操作': 'find_action',
-      '随处搜索': 'search_everywhere',
-      '转到类': 'go_to_class',
-      '转到文件': 'go_to_file',
-      '转到符号': 'go_to_symbol',
-      '复制当前行': 'duplicate_line',
-      '删除当前行': 'delete_line',
-      '注释/取消注释': 'toggle_comment',
-      '增加缩进': 'indent',
-      '减少缩进': 'outdent',
-      '在当前文件中查找': 'find_in_file',
-      '在项目中查找': 'find_in_project',
-      '查找下一个': 'find_next',
-      '切换文件树视图': 'toggle_tree_view',
-      '增大字体': 'increase_font_size',
-      '向下添加光标': 'add_cursor_below',
-      '向上添加光标': 'add_cursor_above',
-      '跳转到声明': 'go_to_declaration',
-      '跳转到实现': 'go_to_implementation',
-      '查找使用': 'find_usages',
-      '提取方法': 'extract_method',
-      '提取变量': 'extract_variable',
-      '调试': 'debug',
-      '切换断点': 'toggle_breakpoint',
-      '在头文件和源文件之间切换': 'switch_header_source',
-      '显示键盘快捷键': 'show_keybindings',
-      '打开资源': 'open_resource',
-      '打开类型': 'open_type',
-      '打开搜索对话框': 'open_search_dialog',
-      '查找上一个': 'find_previous',
-      '转到行': 'go_to_line',
-      '转到最后编辑位置': 'go_to_last_edit',
-      '下一个问题': 'next_problem',
-      '上一个问题': 'previous_problem',
-      '重新打开关闭的编辑器': 'reopen_closed',
-      // WebStorm 特有描述
-      '查找': 'find',
-      '替换': 'replace',
-      '在路径中查找': 'find_in_path',
-      '查找使用': 'find_usages',
-      '跳转到声明': 'go_to_declaration',
-      '跳转到实现': 'go_to_implementation',
-      '跳转到行': 'go_to_line',
-      '最近文件': 'recent_files',
-      '后退': 'go_back',
-      '前进': 'go_forward',
-      '代码补全': 'code_completion',
-      '智能代码补全': 'smart_completion',
-      '格式化代码': 'reformat_code',
-      '优化导入': 'optimize_imports',
-      '提取变量': 'extract_variable',
-      '提取方法': 'extract_method',
-      '重命名': 'rename',
-      // Xcode 特有描述
-      '新建文件': 'new_file',
-      '新建项目': 'new_project',
-      '打开': 'open',
-      '保存': 'save',
-      '保存所有': 'save_all',
-      '运行': 'run',
-      '构建': 'build',
-      '清理构建文件夹': 'clean_build_folder',
-      '测试': 'test',
-      '快速打开': 'quick_open',
-      '撤销': 'undo',
-      '重做': 'redo',
-      '复制': 'copy',
-      '剪切': 'cut',
-      '粘贴': 'paste',
-      '全选': 'select_all',
-      '复制行': 'duplicate_line',
-      '删除行': 'delete_line',
-      '注释/取消注释': 'comment',
-      '增加缩进': 'indent',
-      '减少缩进': 'unindent',
-      '上移行': 'move_line_up',
-      '下移行': 'move_line_down',
-      '查找': 'find',
-      '查找下一个': 'find_next',
-      '查找上一个': 'find_previous',
-      '替换': 'replace',
-      '跳转到行': 'go_to_line',
-      '后退': 'back',
-      '前进': 'forward',
-      '切换全屏': 'toggle_fullscreen',
-      '在项目中查找': 'find_in_project',
-      '查找符号': 'find_symbol',
-      '跳转到定义': 'jump_to_definition',
-      '显示相关项': 'show_related_items',
-      '切换断点': 'toggle_breakpoint',
-      '继续执行': 'continue',
-      '单步跳过': 'step_over',
-      '单步进入': 'step_into',
-      '单步跳出': 'step_out',
-      '显示/隐藏调试区域': 'view_debug_area',
-      '在模拟器中运行': 'run_simulator',
-      '停止运行': 'stop',
-      '设备和模拟器': 'device_simulator',
-      '组织者': 'organizer',
-      '性能分析': 'profile',
-      '显示关联的Interface Builder': 'show_storyboard',
-      '显示/隐藏助手编辑器': 'assistant_editor',
-      '显示对象库': 'show_library',
-      '左对齐': 'align_left',
-      '右对齐': 'align_right',
-      '水平分布': 'distribute_horizontally',
-      '显示/隐藏导航器': 'hide_navigator',
-      '显示项目导航器': 'show_project_navigator',
-      '显示源代码控制导航器': 'show_source_control_navigator',
-      '显示符号导航器': 'show_symbol_navigator',
-      '显示查找导航器': 'show_find_navigator',
-      '显示问题导航器': 'show_issue_navigator',
-      '显示测试导航器': 'show_test_navigator',
-      '显示调试导航器': 'show_debug_navigator',
-      '显示断点导航器': 'show_breakpoint_navigator',
-      '显示报告导航器': 'show_report_navigator',
-      '显示/隐藏实用工具': 'hide_utilities',
-      '显示文件检查器': 'show_file_inspector',
-      '显示快速帮助': 'show_quick_help',
-      '代码补全': 'code_completion',
-      '显示文档': 'show_documentation',
-      '编辑作用域内所有': 'edit_all_in_scope',
-      '重构': 'refactor',
-      '提取方法': 'extract_method',
-      '重命名': 'rename',
-      '提交更改': 'commit',
-      '放弃更改': 'discard_changes',
-      '添加文件': 'add_files',
-      '显示版本编辑器': 'show_version_editor',
-      '模拟器主屏幕': 'simulator_home',
-      '模拟器锁屏': 'simulator_lock',
-      '模拟器左旋转': 'simulator_rotate_left',
-      '模拟器右旋转': 'simulator_rotate_right',
-      '模拟器截图': 'simulator_screenshot',
-      '重命名符号': 'refactor_rename',
-      '提取方法': 'refactor_extract',
-      // CLion 特有描述
-      '在路径中查找': 'find_in_path',
-      '在路径中替换': 'replace_in_path',
-      '关闭文件': 'close_file',
-      '跳转到行': 'go_to_line',
-      '跳转到文件': 'go_to_file',
-      '跳转到类': 'go_to_class',
-      '跳转到符号': 'go_to_symbol',
-      '最近文件': 'recent_files',
-      '智能代码补全': 'smart_code_completion',
-      '生成代码': 'generate_code',
-      '包围代码': 'surround_with',
-      '快速修复': 'quick_fix',
-      '显示意图操作': 'show_intention_actions',
-      '单步跳过': 'step_over',
-      '单步进入': 'step_into',
-      '单步跳出': 'step_out',
-      '继续执行': 'continue_execution',
-      '计算表达式': 'evaluate_expression',
-      '查看断点': 'view_breakpoints',
-      '构建项目': 'build_project',
-      '重新构建项目': 'rebuild_project',
-      '清理': 'clean',
-      '关闭当前标签': 'close_current_tab',
-      '下一个标签': 'next_tab',
-      '上一个标签': 'prev_tab',
-      '垂直分割': 'split_vertical',
-      '水平分割': 'split_horizontal',
-      'VCS操作弹出菜单': 'vcs_operations_popup',
-      '提交': 'commit',
-      '更新项目': 'update_project',
-      '推送': 'push',
-      
-      // Eclipse 特有描述
-      '保存全部': 'save_all',
-      '上移行': 'move_line_up',
-      '下移行': 'move_line_down',
-      '整理导入': 'organize_imports',
-      '提取局部变量': 'extract_local_variable',
-      
-      // Sublime Text 特有描述
-      '切换注释': 'toggle_comment',
-      '选择所有匹配项': 'select_all_matching',
-      '分割视图：2列': 'split_view_2_columns',
-      '单一视图': 'split_view_single',
-      '聚焦组 1': 'focus_group_1',
-      '移动文件到组 1': 'move_file_to_group_1',
-      '折叠全部': 'fold_all',
-      '选择构建系统': 'select_build_system',
-      '切换书签': 'toggle_bookmark',
-      '下一个书签': 'next_bookmark',
-      '上一个书签': 'prev_bookmark',
-      '安装包': 'install_package',
-      '首选项': 'preferences',
-      
-      // VS Code 特有描述
-      '上移行': 'move_line_up',
-      '下移行': 'move_line_down',
-      '在上方添加光标': 'add_cursor_above',
-      '在下方添加光标': 'add_cursor_below',
-      '选择所有出现的位置': 'select_all_occurrences',
-      '开始调试': 'start_debugging',
-      '无调试运行': 'run_without_debugging',
-      'Git提交': 'git_commit',
-      '显示Git面板': 'show_git_panel',
-      '分割编辑器': 'split_editor',
-      '聚焦编辑器组1': 'focus_editor_group_1',
-      '显示文件资源管理器': 'show_file_explorer',
-      '快速修复': 'quick_fix',
-      '源代码操作': 'source_actions',
-      '重命名符号': 'rename_symbol',
-      '显示扩展': 'show_extensions',
-      '显示问题': 'show_problems',
-      '显示输出': 'show_output',
-      '显示调试控制台': 'show_debug_console',
-      '切换禅模式': 'toggle_zen_mode',
-      '转到引用': 'go_to_references',
-      '转到文件中的符号': 'go_to_symbol_in_file',
-      '转到工作区中的符号': 'go_to_symbol_in_workspace',
-      '切换自动换行': 'toggle_word_wrap',
-      '放大': 'zoom_in',
-      '缩小': 'zoom_out',
-      '重置缩放': 'reset_zoom',
-      '安装扩展': 'install_extensions',
-      '打开设置': 'open_settings',
-      '打开键盘快捷键': 'open_keyboard_shortcuts',
-      '打开用户代码片段': 'open_user_snippets',
-      
-      // WebStorm 特有描述
-      '上移行': 'move_line_up',
-      '下移行': 'move_line_down',
-      '在路径中查找': 'find_in_path',
-      '跳转到行': 'go_to_line',
-      '最近文件': 'recent_files',
-      '智能代码补全': 'smart_code_completion',
-      '单步跳过': 'step_over',
-      '单步进入': 'step_into',
-      '保存全部': 'save_all',
-      '关闭文件': 'close_file',
-      '打开终端': 'open_terminal',
-      'Git 提交': 'git_commit',
-      '显示版本控制': 'show_version_control',
-      '实时模板': 'live_templates',
-      'Emmet 展开': 'emmet_expand',
-      'NPM 脚本': 'npm_scripts',
-      
-      // Xcode 特有描述
-      '上移行': 'move_line_up',
-      '下移行': 'move_line_down',
-      '查找符号': 'find_symbol',
-      '跳转到行': 'go_to_line',
-      '跳转到定义': 'go_to_definition',
-      '在导航器中显示': 'reveal_in_navigator',
-      '显示相关项': 'show_related_items',
-      '继续执行': 'continue_execution',
-      '单步跳过': 'step_over',
-      '单步进入': 'step_into',
-      '单步跳出': 'step_out',
-      '显示/隐藏调试区域': 'toggle_debug_area',
-      '在模拟器中运行': 'run_in_simulator',
-      '停止运行': 'stop_running',
-      '设备和模拟器': 'devices_and_simulators',
-      '组织者': 'organizer',
-      '性能分析': 'performance_analysis',
-      '显示关联的Interface Builder': 'show_interface_builder',
-      '显示/隐藏助手编辑器': 'toggle_assistant_editor',
-      '显示对象库': 'show_object_library',
-      '左对齐': 'align_left',
-      '右对齐': 'align_right',
-      '水平分布': 'distribute_horizontally',
-      '显示/隐藏导航器': 'toggle_navigator',
-      '显示项目导航器': 'show_project_navigator',
-      '显示源代码控制导航器': 'show_source_control_navigator',
-      '显示符号导航器': 'show_symbol_navigator',
-      '显示查找导航器': 'show_find_navigator',
-      '显示问题导航器': 'show_issue_navigator',
-      '显示测试导航器': 'show_test_navigator',
-      '显示调试导航器': 'show_debug_navigator',
-      '显示断点导航器': 'show_breakpoint_navigator',
-      '显示报告导航器': 'show_report_navigator',
-      '显示/隐藏实用工具': 'toggle_utilities',
-      '显示文件检查器': 'show_file_inspector',
-      '显示快速帮助': 'show_quick_help',
-      '显示文档': 'show_documentation',
-      '编辑作用域内所有': 'edit_all_in_scope',
-      '重构': 'refactor',
-      '提交更改': 'commit_changes',
-      '放弃更改': 'discard_changes',
-      '添加文件': 'add_files',
-      '显示版本编辑器': 'show_version_editor',
-      '模拟器主屏幕': 'simulator_home',
-      '模拟器锁屏': 'simulator_lock',
-      '模拟器左旋转': 'simulator_rotate_left',
-      '模拟器右旋转': 'simulator_rotate_right',
-      '模拟器截图': 'simulator_screenshot',
-      '重命名符号': 'rename_symbol',
-      '创建常量': 'create_constant',
-      '启动Instruments': 'launch_instruments',
-      '显示内存图': 'show_memory_graph',
-      '查看视图层次结构': 'view_hierarchy',
-      '显示辅助功能检查器': 'show_accessibility_inspector',
-      '切换VoiceOver': 'toggle_voiceover',
-      '添加目标': 'add_target',
-      '在Finder中显示': 'reveal_in_finder',
-      '显示构建设置': 'show_build_settings',
-      '编辑方案': 'edit_scheme',
-      '测试历史': 'test_history',
-      '启用/禁用断点': 'toggle_breakpoint',
-      '添加异常断点': 'add_exception_breakpoint',
-      '显示代码片段': 'show_code_snippets',
-      '创建代码片段': 'create_code_snippet',
-      '显示文档和参考': 'show_documentation_and_reference',
-      '打开开发者网站': 'open_developer_website',
-      '移动到行首': 'move_to_line_start',
-      '移动到行尾': 'move_to_line_end'
-    }
-    
-    const key = descriptionMap[description]
-    return key ? t(`shortcutDescriptions.${key}`, description) : description
-  }
+  return (category: string, app?: string): string => {
+    return getShortcutCategory(t, category, app);
+  };
 }
+
+/**
+ * React Hook：获取快捷键描述
+ * @returns 快捷键描述函数
+ */
+export function useShortcutDescription() {
+  const { t } = useTranslation();
+  
+  return (description: string, type?: string, app?: string): string => {
+    return getShortcutDescription(t, description, type, app);
+  };
+}
+
+/**
+ * 非 Hook 版本的国际化工具对象
+ * 用于非 React 组件环境
+ */
+export interface I18nTools {
+  getToolDescription: (t: TFunction, toolName: string, fallback?: string) => string;
+  getShortcutCategory: (t: TFunction, category: string, app?: string) => string;
+  getShortcutDescription: (t: TFunction, description: string, type?: string, app?: string) => string;
+}
+
+/**
+ * 创建非 Hook 版本的国际化工具
+ * @returns 国际化工具对象
+ */
+export function createI18nTools(): I18nTools {
+  return {
+    getToolDescription,
+    getShortcutCategory,
+    getShortcutDescription
+  };
+}
+
+/**
+ * 类型定义：应用名称
+ */
+export type AppName = keyof typeof shortcutCategoryMaps;
+
+/**
+ * 类型定义：通用操作类型
+ */
+export type CommonActionType = keyof typeof shortcutDescriptionMaps.common;
+
+/**
+ * 类型定义：VS Code 操作类型
+ */
+export type VSCodeActionType = keyof typeof shortcutDescriptionMaps.vscode;
+
+/**
+ * 类型定义：IntelliJ 操作类型
+ */
+export type IntelliJActionType = keyof typeof shortcutDescriptionMaps.intellij;
+
+/**
+ * 预创建的国际化工具实例，方便直接使用
+ */
+export const i18nTools = createI18nTools();

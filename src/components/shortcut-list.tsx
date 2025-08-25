@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { Copy, Check, Filter } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Shortcut } from '@/types'
-import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 import { i18nTools } from '@/utils/i18n-tools'
 
